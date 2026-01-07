@@ -1,0 +1,225 @@
+{
+  "metadata": {
+    "title": "Flux OS - The first planner that understands life doesn't go according to plan",
+    "description": "AI assistant for strategic planning and adaptive execution. A plan is not a contract, but a route that is constantly recalculated."
+  },
+  "header": {
+    "nav": {
+      "features": "Features",
+      "solution": "Solution",
+      "modules": "Modules",
+      "journey": "Journey",
+      "try": "Try"
+    }
+  },
+  "hero": {
+    "title": "Flux OS",
+    "subtitle": "The first planner that understands life doesn't go according to plan.",
+    "description": "A plan is not a contract, but a route that is constantly recalculated. AI assistant for strategic planning and adaptive execution.",
+    "waitlist": {
+      "emailPlaceholder": "Your email",
+      "joinButton": "Join",
+      "loading": "...",
+      "success": "✓"
+    },
+    "tasks": {
+      "competitorAnalysis": {
+        "text": "Competitor Analysis",
+        "subtext": "Research 5 main competitors"
+      },
+      "figmaPrototype": {
+        "text": "Figma Prototype",
+        "subtext": "Create wireframes for MVP"
+      },
+      "dbSetup": {
+        "text": "Database Setup",
+        "subtext": "Connect Neo4j to project"
+      },
+      "hypothesisTesting": {
+        "text": "Hypothesis Testing",
+        "subtext": "Verify task relevance"
+      },
+      "telegramBot": {
+        "text": "Telegram Bot Development",
+        "subtext": "Instead of mobile app"
+      },
+      "apiDocs": {
+        "text": "API Documentation",
+        "subtext": "Describe endpoints for team"
+      }
+    },
+    "agent": {
+      "title": "AI Agent",
+      "status": {
+        "planning": "Planning...",
+        "analyzing": "Analyzing context...",
+        "recalculating": "Recalculating schedule...",
+        "optimizing": "Optimizing priorities..."
+      },
+      "messages": {
+        "planning": "Agent is creating optimal task sequence...",
+        "analyzing": "Agent is analyzing your energy level and context...",
+        "recalculating": "Agent is recalculating schedule based on changes...",
+        "optimizing": "Agent is optimizing priorities and relevance..."
+      },
+      "actions": {
+        "autoComplete": "Auto-complete",
+        "remove": "Remove",
+        "recalculate": "Recalculate"
+      },
+      "indicators": {
+        "adjusting": "AI adjusting",
+        "highPriority": "High priority"
+      }
+    }
+  },
+  "problem": {
+    "title": "The Problem",
+    "description": "Modern productivity tools (Google Calendar, Notion, Todoist) have three critical flaws:",
+    "staticity": {
+      "title": "Staticity",
+      "description": "They don't know that your circumstances or energy level have changed. Uncompleted tasks accumulate, causing feelings of guilt."
+    },
+    "sunkCost": {
+      "title": "Sunk Cost Fallacy",
+      "description": "They keep tasks that have already lost relevance, forcing users to do unnecessary work."
+    },
+    "startParalysis": {
+      "title": "Start Paralysis",
+      "description": "They require users to come up with an action plan themselves when they only have an abstract idea."
+    }
+  },
+  "solution": {
+    "title": "Solution: Flux OS",
+    "description": "Flux OS is an AI assistant that combines <strong>strategic planning</strong> (Generative AI) and <strong>tactical execution</strong> (Adaptive Scheduling).",
+    "subDescription": "It doesn't just tell you when to do a task, but also asks whether it's worth doing at all.",
+    "generativeAI": {
+      "title": "Generative AI",
+      "description": "Creates strategic plans from abstract ideas, breaking down big goals into actionable steps."
+    },
+    "adaptivePlanning": {
+      "title": "Adaptive Planning",
+      "description": "Constantly recalculates the schedule based on your energy level, available time, and changed circumstances."
+    }
+  },
+  "modules": {
+    "title": "Key Modules",
+    "description": "Four powerful modules working together to create an adaptive planning system",
+    "module": "Module",
+    "solvesProblem": "Solves the problem:",
+    "blueprint": {
+      "title": "The Blueprint",
+      "subtitle": "Strategy Generator",
+      "problem": "I don't know where to start",
+      "features": {
+        "inputToPlan": "Input-to-Plan: User enters intent",
+        "contextInterview": "Context Interview: AI asks 3-4 clarifying questions",
+        "treeGeneration": "Tree Generation: System builds hierarchical tree (Goal → Hypotheses → Phases → Tasks)",
+        "autoTagging": "Auto-Tagging: Each task gets tags (energy type, time estimate)"
+      }
+    },
+    "flowEngine": {
+      "title": "The Flow Engine",
+      "subtitle": "Adaptive Execution",
+      "problem": "I don't have energy/time for this plan today",
+      "features": {
+        "morningCheckin": "Morning Check-in: Asks about energy level and available time",
+        "dynamicFiltering": "Dynamic Filtering: Adapts tasks to your energy level",
+        "liquidTime": "Liquid Time: Finds perfect tasks for short time windows",
+        "gpsRescheduling": "GPS-Rescheduling: Silently recalculates schedule without stress"
+      }
+    },
+    "relevanceEngine": {
+      "title": "The Relevance Engine",
+      "subtitle": "Relevance Engine",
+      "problem": "I'm doing things that no longer make sense",
+      "features": {
+        "hypothesisTesting": "Hypothesis Testing: Tasks are tied to hypotheses",
+        "impactFeedback": "Impact Feedback: Assessment of task impact on goal",
+        "rottingTasks": "Rotting Tasks Protocol: Blocks tasks that are postponed 3+ times"
+      }
+    },
+    "interface": {
+      "title": "Interface & UX",
+      "subtitle": "Focus on execution",
+      "problem": "Distractions and overload",
+      "features": {
+        "focusMode": "Focus Mode: Always one task on screen",
+        "swipeControl": "Swipe Control: Intuitive gesture control",
+        "panicButton": "Panic Button: Burnout mode with monochrome interface"
+      }
+    }
+  },
+  "userJourney": {
+    "title": "User Journey",
+    "description": "Persona: Alex, a developer, wants to launch a startup but works full-time.",
+    "monday": {
+      "day": "Monday",
+      "phase": "Strategy",
+      "title": "Plan Creation",
+      "description": "Alex writes in Flux: \"I want to launch an MVP app for financial tracking\". Flux generates a plan: \"Competitor Analysis\", \"Figma Prototype\", \"Database Setup\". Alex approves the plan."
+    },
+    "tuesday": {
+      "day": "Tuesday",
+      "phase": "Reality",
+      "title": "Adaptation to Circumstances",
+      "description": "Alex was delayed at his main job. Energy is at zero. The system sees that the evening is busy and automatically removes the \"Figma Prototype\" task (because it requires creativity). Instead, it suggests: \"Watch 2 videos about competitors\" (Low Energy)."
+    },
+    "friday": {
+      "day": "Friday",
+      "phase": "Analysis",
+      "title": "Strategy Reassessment",
+      "description": "Alex realizes that no one uses apps, everyone is on Telegram bots. He marks the \"Mobile App\" hypothesis as irrelevant. Flux asks: \"Delete React Native tasks and replace them with a Telegram bot development plan?\". Alex presses \"Yes\". The calendar is cleared of clutter."
+    }
+  },
+  "waitlist": {
+    "title": "Join the Waitlist",
+    "description": "Be among the first to try Flux OS. Get access to the beta version as soon as it's ready.",
+    "emailPlaceholder": "Your email",
+    "joinButton": "Join",
+    "loading": "Sending...",
+    "success": "Done!",
+    "messages": {
+      "emailConfirmed": "✅ Email confirmed! You've been added to the waitlist.",
+      "invalidToken": "Invalid confirmation token",
+      "expiredToken": "Token expired. Please register again.",
+      "confirmationFailed": "Confirmation error. Please try again.",
+      "serverError": "Server error. Please try later.",
+      "confirmationError": "Confirmation error"
+    }
+  },
+  "footer": {
+    "message1": "Flux is not a tool to do more.",
+    "message2": "It's a tool to do what makes sense and not go crazy in the process.",
+    "copyright": "© 2026 Flux OS. All rights reserved."
+  },
+  "waitlistApi": {
+    "errors": {
+      "invalidToken": "Invalid or expired token",
+      "expiredToken": "Token expired. Please register again.",
+      "emailRequired": "Email is required",
+      "invalidEmail": "Invalid email format",
+      "sendError": "Failed to send email.",
+      "domainError": "Domain configuration error. Check RESEND_FROM_EMAIL.",
+      "accessError": "No access to send email. Check RESEND_API_KEY.",
+      "saveError": "Save error",
+      "serverError": "Internal server error",
+      "tokenMissing": "Token is missing"
+    },
+    "success": {
+      "alreadyConfirmed": "Email already confirmed",
+      "confirmed": "Email confirmed and added to list",
+      "confirmationSent": "Confirmation email sent to your email"
+    }
+  },
+  "common": {
+    "errors": {
+      "connectionError": "Connection error. Please try later.",
+      "submissionError": "Submission error"
+    },
+    "success": {
+      "addedToWaitlist": "Thank you! You've been successfully added to the waitlist."
+    }
+  }
+}
+

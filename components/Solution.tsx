@@ -1,37 +1,43 @@
+import { useTranslations } from 'next-intl'
+
 export default function Solution() {
+  const t = useTranslations('solution')
+
   return (
-    <section id="solution" className="py-20 bg-white">
+    <section id="solution" className="py-12 sm:py-16 lg:py-20 bg-white dark:bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Рішення: Flux OS
+        <div className="text-center mb-10 sm:mb-12 lg:mb-16">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
+            {t('title')}
           </h2>
           <div className="max-w-4xl mx-auto">
-            <p className="text-xl md:text-2xl text-gray-700 mb-6 leading-relaxed">
-              Flux OS — це AI-асистент, який поєднує <span className="font-semibold text-primary-700">стратегічне планування</span> (Generative AI) та <span className="font-semibold text-primary-700">тактичне виконання</span> (Adaptive Scheduling).
+            <p className="text-lg sm:text-xl md:text-2xl text-gray-700 dark:text-gray-300 mb-4 sm:mb-6 leading-relaxed">
+              {t.rich('description', {
+                strong: (chunks) => <span className="font-semibold text-primary-700 dark:text-primary-400">{chunks}</span>
+              })}
             </p>
-            <p className="text-lg md:text-xl text-gray-600 font-medium">
-              Він не просто каже, коли робити задачу, а й запитує, чи варто її робити взагалі.
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-400 font-medium">
+              {t('subDescription')}
             </p>
           </div>
         </div>
 
-        <div className="bg-gray-50 rounded-2xl shadow-lg p-8 md:p-12 max-w-5xl mx-auto border border-gray-200">
-          <div className="grid md:grid-cols-2 gap-8 items-center">
+        <div className="bg-gray-50 dark:bg-gray-800 rounded-2xl shadow-lg p-6 sm:p-8 md:p-12 max-w-5xl mx-auto border border-gray-200 dark:border-gray-700">
+          <div className="grid md:grid-cols-2 gap-6 sm:gap-8 items-center">
             <div>
-              <h3 className="text-3xl font-bold text-gray-900 mb-4">
-                Генеративний AI
+              <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
+                {t('generativeAI.title')}
               </h3>
-              <p className="text-gray-700 text-lg mb-6">
-                Створює стратегічні плани з абстрактних ідей, розбиваючи великі цілі на виконувані кроки.
+              <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 mb-4 sm:mb-6">
+                {t('generativeAI.description')}
               </p>
             </div>
             <div>
-              <h3 className="text-3xl font-bold text-gray-900 mb-4">
-                Адаптивне Планування
+              <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
+                {t('adaptivePlanning.title')}
               </h3>
-              <p className="text-gray-700 text-lg mb-6">
-                Постійно перераховує розклад на основі вашого рівня енергії, доступного часу та змінених обставин.
+              <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 mb-4 sm:mb-6">
+                {t('adaptivePlanning.description')}
               </p>
             </div>
           </div>

@@ -45,6 +45,31 @@ async function getOrCreateAudience(): Promise<string> {
   return cachedAudienceId;
 }
 
+// Перевіряє чи контакт вже існує в audience
+async function contactExists(email: string, audienceId: string): Promise<boolean> {
+  try {
+    const { data: contacts, error } = await resend.contacts.list({
+      audienceId,
+    });
+
+    if (error) {
+      console.error("Error checking contact existence:", error);
+      // Якщо помилка, припускаємо що контакту немає і продовжуємо
+      return false;
+    }
+
+    // Перевіряємо чи є контакт з таким email
+    const exists = contacts?.data?.some(
+      (contact) => contact.email.toLowerCase() === email.toLowerCase()
+    );
+
+    return exists || false;
+  } catch (error) {
+    console.error("Exception checking contact existence:", error);
+    return false;
+  }
+}
+
 export async function POST(request: Request) {
   try {
     const { email, token } = await request.json();
@@ -112,6 +137,20 @@ export async function POST(request: Request) {
       return NextResponse.json(
         { error: "Невірний формат email" },
         { status: 400 }
+      );
+    }
+
+    // Перевіряємо чи користувач вже доданий до Resend
+    const audienceId = await getOrCreateAudience();
+    const alreadyExists = await contactExists(email, audienceId);
+
+    if (alreadyExists) {
+      return NextResponse.json(
+        {
+          success: true,
+          message: "Ви вже підписані на наш список очікування",
+        },
+        { status: 200 }
       );
     }
 
