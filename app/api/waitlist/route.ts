@@ -13,6 +13,107 @@ const pendingConfirmations = new Map<
   { email: string; expiresAt: number }
 >();
 
+// Rate limiter: максимум 2 запити в секунду (Resend limit)
+// Використовуємо чергу для синхронізації запитів та мінімальний інтервал між запитами
+const requestTimestamps: number[] = [];
+const RATE_LIMIT_REQUESTS = 2;
+const RATE_LIMIT_WINDOW = 1000; // 1 секунда
+const MIN_REQUEST_INTERVAL = 600; // Мінімальний інтервал між запитами (600ms для безпеки)
+
+// Черга для синхронізації запитів
+let requestQueue: Promise<void> = Promise.resolve();
+
+// Функція для очікування перед наступним запитом
+async function waitForRateLimit(): Promise<void> {
+  // Додаємо запит до черги для послідовної обробки
+  const previousRequest = requestQueue;
+  let resolveNext: () => void;
+  requestQueue = new Promise((resolve) => {
+    resolveNext = resolve;
+  });
+  
+  await previousRequest;
+  
+  // Використовуємо цикл замість рекурсії для кращої обробки
+  while (true) {
+    const now = Date.now();
+    
+    // Видаляємо старі запити (старіше за 1 секунду)
+    while (requestTimestamps.length > 0 && requestTimestamps[0] < now - RATE_LIMIT_WINDOW) {
+      requestTimestamps.shift();
+    }
+    
+    // Якщо досягли ліміту, чекаємо поки не звільниться місце
+    if (requestTimestamps.length >= RATE_LIMIT_REQUESTS) {
+      const oldestRequest = requestTimestamps[0];
+      const waitTime = RATE_LIMIT_WINDOW - (now - oldestRequest) + 150; // +150ms для безпеки
+      if (waitTime > 0) {
+        await new Promise((resolve) => setTimeout(resolve, waitTime));
+        continue; // Перевіряємо знову після очікування
+      }
+    }
+    
+    // Перевіряємо мінімальний інтервал від останнього запиту
+    if (requestTimestamps.length > 0) {
+      const lastRequest = requestTimestamps[requestTimestamps.length - 1];
+      const timeSinceLastRequest = now - lastRequest;
+      if (timeSinceLastRequest < MIN_REQUEST_INTERVAL) {
+        const waitTime = MIN_REQUEST_INTERVAL - timeSinceLastRequest + 100; // +100ms для безпеки
+        await new Promise((resolve) => setTimeout(resolve, waitTime));
+        continue; // Перевіряємо знову після очікування
+      }
+    }
+    
+    // Додаємо поточний запит
+    requestTimestamps.push(Date.now());
+    
+    // Дозволяємо наступному запиту продовжити
+    resolveNext!();
+    break;
+  }
+}
+
+// Функція для повторної спроби з експоненційним backoff
+// Resend повертає помилки в об'єкті { data, error }, а не як exceptions
+async function retryWithBackoff<T extends { error?: any }>(
+  fn: () => Promise<T>,
+  maxRetries: number = 3,
+  baseDelay: number = 1000
+): Promise<T> {
+  let lastResult: T;
+  
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    await waitForRateLimit();
+    lastResult = await fn();
+    
+    // Якщо немає помилки, повертаємо результат
+    if (!lastResult.error) {
+      if (attempt > 0) {
+        console.log(`Request succeeded after ${attempt} retries`);
+      }
+      return lastResult;
+    }
+    
+    const error = lastResult.error;
+    
+    // Якщо це rate limit помилка (429), робимо retry
+    if (error?.statusCode === 429 && attempt < maxRetries) {
+      const delay = baseDelay * Math.pow(2, attempt);
+      console.log(`Rate limit hit (429), retrying in ${delay}ms (attempt ${attempt + 1}/${maxRetries + 1})`);
+      await new Promise((resolve) => setTimeout(resolve, delay));
+      continue;
+    }
+    
+    // Для інших помилок або якщо вичерпано спроби, повертаємо результат з помилкою
+    if (error?.statusCode === 429) {
+      console.error(`Rate limit error (429) after ${attempt + 1} attempts`);
+    }
+    return lastResult;
+  }
+  
+  return lastResult!;
+}
+
 // Валідація email формату
 function isValidEmail(email: string): boolean {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -25,20 +126,25 @@ async function getOrCreateAudience(): Promise<string> {
   }
 
   // Спочатку перевіряємо чи є існуючі audiences
-  const { data: audiences } = await resend.audiences.list();
+  const { data: audiences, error: listError } = await retryWithBackoff(async () => {
+    return await resend.audiences.list();
+  });
 
-  if (audiences?.data && audiences.data.length > 0) {
+  // Якщо немає помилки і є audiences, використовуємо перший
+  if (!listError && audiences?.data && audiences.data.length > 0) {
     cachedAudienceId = audiences.data[0].id;
     return cachedAudienceId;
   }
 
   // Якщо немає, створюємо новий
-  const { data: newAudience, error } = await resend.audiences.create({
-    name: "Flux OS Waitlist",
+  const { data: newAudience, error: createError } = await retryWithBackoff(async () => {
+    return await resend.audiences.create({
+      name: "Flux OS Waitlist",
+    });
   });
 
-  if (error || !newAudience?.id) {
-    throw new Error("Не вдалося створити audience");
+  if (createError || !newAudience?.id) {
+    throw new Error(`Не вдалося створити audience: ${createError?.message || "Unknown error"}`);
   }
 
   cachedAudienceId = newAudience.id;
@@ -48,8 +154,10 @@ async function getOrCreateAudience(): Promise<string> {
 // Перевіряє чи контакт вже існує в audience
 async function contactExists(email: string, audienceId: string): Promise<boolean> {
   try {
-    const { data: contacts, error } = await resend.contacts.list({
-      audienceId,
+    const { data: contacts, error } = await retryWithBackoff(async () => {
+      return await resend.contacts.list({
+        audienceId,
+      });
     });
 
     if (error) {
@@ -96,9 +204,11 @@ export async function POST(request: Request) {
 
       // Додаємо email в audience після підтвердження
       const audienceId = await getOrCreateAudience();
-      const { error } = await resend.contacts.create({
-        email: confirmation.email,
-        audienceId,
+      const { error } = await retryWithBackoff(async () => {
+        return await resend.contacts.create({
+          email: confirmation.email,
+          audienceId,
+        });
       });
 
       pendingConfirmations.delete(confirmationToken);
@@ -172,17 +282,19 @@ export async function POST(request: Request) {
       baseUrl,
     });
 
-    const { data: emailData, error: emailError } = await resend.emails.send({
-      from: fromEmail,
-      to: email,
-      subject: "Підтвердіть підписку на Flux OS",
-      html: `
-        <h1>Підтвердіть вашу підписку</h1>
-        <p>Натисніть на посилання нижче, щоб підтвердити ваш email та додатись до списку очікування Flux OS:</p>
-        <p><a href="${confirmUrl}" style="background: #000; color: #fff; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block;">Підтвердити підписку</a></p>
-        <p>Або скопіюйте це посилання: ${confirmUrl}</p>
-        <p>Посилання дійсне 24 години.</p>
-      `,
+    const { data: emailData, error: emailError } = await retryWithBackoff(async () => {
+      return await resend.emails.send({
+        from: fromEmail,
+        to: email,
+        subject: "Підтвердіть підписку на Flux OS",
+        html: `
+          <h1>Підтвердіть вашу підписку</h1>
+          <p>Натисніть на посилання нижче, щоб підтвердити ваш email та додатись до списку очікування Flux OS:</p>
+          <p><a href="${confirmUrl}" style="background: #000; color: #fff; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block;">Підтвердити підписку</a></p>
+          <p>Або скопіюйте це посилання: ${confirmUrl}</p>
+          <p>Посилання дійсне 24 години.</p>
+        `,
+      });
     });
 
     if (emailError) {
@@ -207,6 +319,9 @@ export async function POST(request: Request) {
       } else if (emailError.statusCode === 403) {
         errorMessage =
           "Немає доступу до відправки email. Перевірте RESEND_API_KEY.";
+      } else if (emailError.statusCode === 429) {
+        errorMessage =
+          "Занадто багато запитів. Будь ласка, спробуйте через кілька секунд.";
       } else if (emailError.message) {
         errorMessage = `Помилка: ${emailError.message}`;
       }
@@ -259,9 +374,11 @@ export async function GET(request: Request) {
   // Додаємо email в audience
   try {
     const audienceId = await getOrCreateAudience();
-    const { error } = await resend.contacts.create({
-      email: confirmation.email,
-      audienceId,
+    const { error } = await retryWithBackoff(async () => {
+      return await resend.contacts.create({
+        email: confirmation.email,
+        audienceId,
+      });
     });
 
     pendingConfirmations.delete(confirmationToken);
