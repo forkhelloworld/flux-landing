@@ -47,12 +47,12 @@ export function MockupEnergySelector() {
   ];
 
   return (
-    <div className="flex bg-black/40 p-1 rounded-2xl border border-white/5 backdrop-blur-md">
+    <div className="flex bg-black/40 p-1 rounded-2xl border border-white/5 backdrop-blur-md w-full">
       {levels.map((level) => (
         <div
           key={level.id}
           className={cn(
-            "flex-1 px-4 py-1.5 rounded-xl text-[10px] font-bold uppercase tracking-wider text-center transition-all duration-300 cursor-pointer",
+            "flex-1 px-3 sm:px-4 py-1.5 rounded-xl text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-center transition-all duration-300 cursor-pointer",
             level.active ? cn(level.bg, level.color) : "text-white/20 hover:text-white/40"
           )}
         >
@@ -97,7 +97,7 @@ export function MockupTaskCard({ title, subtitle, status, energy, xp }: {
   return (
     <motion.div
       whileHover={{ y: -2, scale: 1.01 }}
-      className="group relative p-5 rounded-[2rem] bg-gradient-to-br from-white/10 to-white/[0.02] border border-white/10 backdrop-blur-2xl transition-all duration-300 shadow-xl"
+      className="group relative p-4 sm:p-5 rounded-[2rem] bg-gradient-to-br from-white/10 to-white/[0.02] border border-white/10 backdrop-blur-2xl transition-all duration-300 shadow-xl w-full"
     >
       <div className="flex justify-between items-start mb-4">
         <div className="flex items-center gap-2">
@@ -105,34 +105,34 @@ export function MockupTaskCard({ title, subtitle, status, energy, xp }: {
             "w-2 h-2 rounded-full",
             status === 'active' ? "bg-teal-400 animate-pulse shadow-[0_0_8px_rgba(45,212,191,1)]" : "bg-white/20"
           )} />
-          <span className="text-[10px] font-bold text-white/30 uppercase tracking-widest">
+          <span className="text-[10px] font-bold text-white/30 uppercase tracking-widest whitespace-nowrap">
             {status === 'active' ? t('momentum') : t('nextStep')}
           </span>
         </div>
         <div className="bg-teal-500/10 px-2 py-0.5 rounded-lg border border-teal-500/20 text-[10px] font-mono text-teal-400">
-          +{xp} XP
+          +{xp}
         </div>
       </div>
 
-      <h3 className="text-lg font-medium text-white/90 mb-1 group-hover:text-teal-400 transition-colors line-clamp-1">
+      <h3 className="text-base sm:text-lg font-medium text-white/90 mb-1 group-hover:text-teal-400 transition-colors line-clamp-1">
         {title}
       </h3>
-      <p className="text-[11px] text-white/40 font-light mb-4 leading-relaxed line-clamp-2">
+      <p className="text-[10px] sm:text-[11px] text-white/40 font-light mb-4 leading-relaxed line-clamp-2">
         {subtitle}
       </p>
 
       <div className="flex items-center justify-between pt-4 border-t border-white/5">
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-1.5 text-white/30">
+        <div className="flex items-center gap-3 sm:gap-4 overflow-hidden">
+          <div className="flex items-center gap-1.5 text-white/30 shrink-0">
             <Clock className="w-3.5 h-3.5" />
-            <span className="text-[10px] font-mono tracking-tight">{t('duration', { min: 25 })}</span>
+            <span className="text-[9px] sm:text-[10px] font-mono tracking-tight">25m</span>
           </div>
-          <div className="flex items-center gap-1.5 text-white/30">
+          <div className="flex items-center gap-1.5 text-white/30 truncate">
             <Zap className="w-3.5 h-3.5 text-amber-400/50" />
-            <span className="text-[10px] font-mono tracking-tight uppercase">{t('energy', { level: tEnergy(energy) })}</span>
+            <span className="text-[9px] sm:text-[10px] font-mono tracking-tight uppercase truncate">{tEnergy(energy)}</span>
           </div>
         </div>
-        <button className="h-8 w-16 rounded-xl bg-teal-400/10 hover:bg-teal-400 text-teal-400 hover:text-black transition-all duration-300 flex items-center justify-center border border-teal-500/20 hover:border-teal-400 shadow-lg group-hover:shadow-teal-500/20">
+        <button className="h-8 w-12 sm:w-16 rounded-xl bg-teal-400/10 hover:bg-teal-400 text-teal-400 hover:text-black transition-all duration-300 flex items-center justify-center border border-teal-500/20 hover:border-teal-400 shadow-lg group-hover:shadow-teal-500/20 flex-shrink-0">
           <ChevronRight className="w-4 h-4" />
         </button>
       </div>
@@ -279,6 +279,28 @@ export function MockupHeader() {
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+// Mobile Smartphone Frame
+export function MockupMobileFrame({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="relative mx-auto w-full max-w-[320px] aspect-[9/19] rounded-[3rem] p-3 bg-gradient-to-br from-white/20 via-white/[0.05] to-transparent border border-white/10 backdrop-blur-2xl shadow-[0_40px_100px_-20px_rgba(0,0,0,0.8)] overflow-hidden scale-[0.85] sm:scale-100">
+      {/* Notch */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-7 bg-black rounded-b-2xl z-50 flex items-center justify-center gap-2">
+        <div className="w-10 h-1 bg-white/10 rounded-full" />
+        <div className="w-1.5 h-1.5 rounded-full bg-white/5" />
+      </div>
+
+      {/* Internal Content */}
+      <div className="w-full h-full bg-black/90 rounded-[2.2rem] border border-white/5 overflow-hidden flex flex-col relative">
+        {children}
+      </div>
+
+      {/* Hardware Buttons */}
+      <div className="absolute left-[-2px] top-24 w-[3px] h-12 bg-white/10 rounded-r-lg" />
+      <div className="absolute left-[-2px] top-40 w-[3px] h-12 bg-white/10 rounded-r-lg" />
+      <div className="absolute right-[-2px] top-32 w-[3px] h-20 bg-white/10 rounded-l-lg" />
     </div>
   );
 }

@@ -81,7 +81,7 @@ export function WaitlistForm({ className, variant = "hero" }: WaitlistFormProps)
             exit={{ opacity: 0 }}
             className="relative flex flex-col gap-3"
           >
-            <div className="relative group">
+            <div className="relative group flex flex-col sm:flex-row gap-3">
               <input
                 type="email"
                 value={email}
@@ -91,21 +91,21 @@ export function WaitlistForm({ className, variant = "hero" }: WaitlistFormProps)
                 }}
                 placeholder={t("placeholder")}
                 disabled={status === "loading"}
-                className={`w-full h-16 pl-6 pr-32 rounded-full bg-white/[0.03] border border-white/10 backdrop-blur-xl text-white placeholder:text-white/20 outline-none focus:border-teal-500/50 focus:bg-white/[0.05] transition-all duration-300 ${
+                className={`w-full h-16 px-6 rounded-full bg-white/[0.03] border border-white/10 backdrop-blur-xl text-white placeholder:text-white/20 outline-none focus:border-teal-500/50 focus:bg-white/[0.05] transition-all duration-300 sm:pr-32 ${
                   status === "error" ? "border-red-500/50 bg-red-500/5" : ""
                 }`}
               />
-              <div className="absolute right-2 top-2 bottom-2">
+              <div className="sm:absolute sm:right-2 sm:top-2 sm:bottom-2 w-full sm:w-auto mt-2 sm:mt-0">
                 <button
                   type="submit"
                   disabled={status === "loading"}
-                  className="h-full px-6 rounded-full bg-gradient-to-r from-teal-400 to-cyan-500 text-black font-bold flex items-center gap-2 hover:shadow-[0_0_30px_rgba(45,212,191,0.4)] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
+                  className="w-full h-14 sm:h-full px-8 rounded-full bg-gradient-to-r from-teal-400 to-cyan-500 text-black font-bold flex items-center justify-center gap-2 hover:shadow-[0_0_30px_rgba(45,212,191,0.4)] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
                 >
                   {status === "loading" ? (
                     <Loader2 className="w-5 h-5 animate-spin" />
                   ) : (
                     <>
-                      <span className="hidden sm:inline">{t("button")}</span>
+                      <span>{t("button")}</span>
                       <ArrowRight className="w-4 h-4" />
                     </>
                   )}

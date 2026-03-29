@@ -14,7 +14,7 @@ export function Hero() {
   const heroY = useTransform(scrollY, [0, 500], [0, -100]);
 
   return (
-    <section ref={containerRef} className="relative w-full min-h-screen flex flex-col items-center justify-center pt-24 pb-20 px-4 overflow-visible">
+    <section ref={containerRef} className="relative w-full min-h-screen flex flex-col items-center justify-center pt-24 pb-12 md:pb-20 px-6 overflow-visible">
       {/* Radial glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-[radial-gradient(circle,rgba(45,212,191,0.07)_0%,rgba(6,182,212,0.03)_30%,transparent_60%)] pointer-events-none" />
 
@@ -22,7 +22,7 @@ export function Hero() {
       <motion.div
         animate={{ y: [-15, 10, -15] }}
         transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-        className="hidden lg:flex absolute left-[5%] xl:left-[10%] top-1/3 flex-col gap-6 z-10 opacity-60"
+        className="hidden lg:flex absolute left-[5%] xl:left-[10%] 2xl:left-[15%] top-1/3 flex-col gap-6 z-10 opacity-60"
       >
         <motion.div
           whileHover={{ scale: 1.05, opacity: 1 }}
@@ -87,7 +87,7 @@ export function Hero() {
       <motion.div
         animate={{ y: [15, -10, 15] }}
         transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-        className="hidden lg:flex absolute right-[5%] xl:right-[10%] top-1/4 flex-col gap-8 z-10 items-end opacity-60"
+        className="hidden lg:flex absolute right-[5%] xl:right-[10%] 2xl:right-[15%] top-1/4 flex-col gap-8 z-10 items-end opacity-60"
       >
         <motion.div
           animate={{ rotate: [0, 5, -5, 0] }}
@@ -119,7 +119,7 @@ export function Hero() {
       {/* Hero content */}
       <motion.div
         style={{ opacity: heroOpacity, scale: heroScale, y: heroY }}
-        className="relative z-20 flex flex-col items-center text-center max-w-5xl mx-auto"
+        className="relative z-20 flex flex-col items-center text-center max-w-5xl 2xl:max-w-7xl mx-auto"
       >
         {/* Badge */}
         <motion.div
@@ -137,10 +137,10 @@ export function Hero() {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-          className="text-4xl md:text-6xl lg:text-[5.5rem] xl:text-[6.5rem] font-bold tracking-tighter leading-[0.95] mb-10"
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-[5.5rem] xl:text-[6.5rem] 2xl:text-[7.5rem] font-bold tracking-tight md:tracking-tighter leading-[1.1] md:leading-[0.95] mb-6 md:mb-10"
         >
           <span className="text-white drop-shadow-sm">{t("title1")}</span><br />
-          <span className="animate-shimmer bg-[length:200%_100%] bg-[linear-gradient(90deg,rgb(45,212,191)_0%,rgb(6,182,212)_25%,rgba(255,255,255,0.9)_50%,rgb(6,182,212)_75%,rgb(45,212,191)_100%)] bg-clip-text text-transparent pb-3 inline-block">
+          <span className="md:animate-shimmer bg-[length:200%_100%] bg-[linear-gradient(90deg,rgb(45,212,191)_0%,rgb(6,182,212)_25%,rgba(255,255,255,0.9)_50%,rgb(6,182,212)_75%,rgb(45,212,191)_100%)] bg-clip-text text-transparent pb-3 inline-block">
             {t("title2")}
           </span>
         </motion.h1>
@@ -149,7 +149,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.6 }}
-          className="text-base md:text-lg text-white/40 max-w-2xl mb-14 font-light leading-relaxed mx-auto px-4"
+          className="text-base sm:text-lg md:text-xl 2xl:text-2xl text-white/40 max-w-2xl 2xl:max-w-4xl mb-8 md:mb-14 font-light leading-relaxed mx-auto px-4"
         >
           {t("subtitle")}
         </motion.p>
@@ -163,9 +163,9 @@ export function Hero() {
             href="#waitlist"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.98 }}
-            className="h-16 px-10 rounded-full bg-gradient-to-r from-teal-400 to-cyan-500 text-black font-bold text-xl flex items-center justify-center gap-3 shadow-[0_0_50px_rgba(45,212,191,0.3)] hover:shadow-[0_0_80px_rgba(45,212,191,0.5)] transition-shadow duration-300"
+            className="h-14 md:h-16 px-8 md:px-10 rounded-full bg-gradient-to-r from-teal-400 to-cyan-500 text-black font-bold text-base md:text-xl flex items-center justify-center gap-3 shadow-[0_0_50px_rgba(45,212,191,0.3)] hover:shadow-[0_0_80px_rgba(45,212,191,0.5)] transition-shadow duration-300"
           >
-            {t("cta")} <ArrowRight className="w-6 h-6" />
+            {t("cta")} <ArrowRight className="w-5 md:w-6 h-5 md:h-6" />
           </motion.a>
         </motion.div>
       </motion.div>

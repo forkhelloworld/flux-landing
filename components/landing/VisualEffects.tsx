@@ -7,14 +7,16 @@ export function Particles({ count = 30 }: { count?: number }) {
   const [particles, setParticles] = useState<{ id: number; left: number; size: number; duration: number; delay: number; opacity: number; isBright: boolean }[]>([]);
 
   useEffect(() => {
-    const generated = Array.from({ length: count }, (_, i) => ({
+    const isMobile = window.innerWidth < 768;
+    const finalCount = isMobile ? Math.min(count, 12) : count;
+    const generated = Array.from({ length: finalCount }, (_, i) => ({
       id: i,
       left: Math.random() * 100,
-      size: Math.random() * 3 + 1,
+      size: Math.random() * (isMobile ? 2 : 3) + 1,
       duration: Math.random() * 20 + 15,
       delay: Math.random() * 20,
-      opacity: Math.random() * 0.4 + 0.1,
-      isBright: Math.random() > 0.7,
+      opacity: Math.random() * (isMobile ? 0.3 : 0.4) + 0.1,
+      isBright: Math.random() > 0.8,
     }));
     setParticles(generated);
   }, [count]);
@@ -74,7 +76,7 @@ export function CursorGlow() {
 
 export function AuroraBlobs() {
   return (
-    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-70">
+    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-70 hidden md:block">
       <div
         className="absolute w-[800px] h-[600px] -top-[15%] -left-[10%] animate-aurora"
         style={{ background: "radial-gradient(ellipse, rgba(45,212,191,0.08) 0%, transparent 70%)" }}

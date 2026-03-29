@@ -16,7 +16,7 @@ export function Audience() {
   ];
 
   return (
-    <section className="w-full max-w-6xl py-32 px-6 flex flex-col items-center mx-auto">
+    <section className="w-full max-w-6xl 2xl:max-w-7xl py-32 px-6 flex flex-col items-center mx-auto">
       <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={staggerContainer} className="text-center mb-16 max-w-3xl">
         <motion.div variants={staggerItem}>
           <span className="inline-block px-4 py-1.5 rounded-full border border-white/10 bg-white/[0.02] text-[10px] font-bold text-teal-400 tracking-widest uppercase mb-6">

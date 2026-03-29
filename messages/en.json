@@ -165,11 +165,14 @@
   },
   "ProductMockup": {
     "badge": "The Interface",
-    "title": "Warm Human <span>Minimalism</span>",
+    "title": "Mindful <span>Momentum</span>",
     "subtitle": "FluxOS stays invisible until you need it, focusing your attention on the next logical action based on your state.",
     "systemStatus": "System Status",
-    "executionVelocity": "Execution Velocity",
-    "velocityValue": "8.2 tasks/day",
+    "header": {
+      "search": "Search Tasks..."
+    },
+    "executionVelocity": "Flow Consistency",
+    "velocityValue": "94%",
     "focusScore": "Focus Score",
     "scoreValue": "650 XP",
     "energyLevel": "Energy Level",
@@ -182,6 +185,7 @@
       "title": "Brainstorm Side Project",
       "subtitle": "Sketch initial wireframes for the habit tracker app. Focus on the core user flow."
     },
+    "nowFocus": "Now Focus",
     "upcomingActions": "Upcoming Actions",
     "viewAll": "View all",
     "task3": "Review 20 Japanese vocabulary cards",

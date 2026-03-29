@@ -108,6 +108,13 @@
   opacity: 0.4;
 }
 
+@media (max-width: 768px) {
+  .grain-overlay::before {
+    animation: none;
+    opacity: 0.2;
+  }
+}
+
 /* Animated gradient border — needs ::before with mask */
 .glow-card {
   position: relative;
