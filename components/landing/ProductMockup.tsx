@@ -33,7 +33,7 @@ export function ProductMockup() {
           </span>
         </motion.div>
         <motion.h2 variants={staggerItem} className="text-3xl md:text-5xl font-medium mb-4 tracking-tight text-white/90">
-          {/* Note: In uk.json, Minimalism is not wrapped in a span yet, but I can adjust the translation string or the code */}
+          {/* Note: In ua.json, Minimalism is not wrapped in a span yet, but I can adjust the translation string or the code */}
           {t.rich("title", {
             span: (chunks) => <span className="text-teal-400">{chunks}</span>
           })}

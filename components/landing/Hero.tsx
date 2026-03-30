@@ -137,7 +137,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-          className="text-4xl sm:text-5xl md:text-6xl lg:text-[5.5rem] xl:text-[6.5rem] 2xl:text-[7.5rem] font-bold tracking-tight md:tracking-tighter leading-[1.1] md:leading-[0.95] mb-6 md:mb-10"
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-[5.5rem] xl:text-[6.5rem] 2xl:text-[7.5rem] font-serif font-bold tracking-tight md:tracking-tight leading-[1.1] md:leading-[0.95] mb-6 md:mb-10 italic"
         >
           <span className="text-white drop-shadow-sm">{t("title1")}</span><br />
           <span className="md:animate-shimmer bg-[length:200%_100%] bg-[linear-gradient(90deg,rgb(45,212,191)_0%,rgb(6,182,212)_25%,rgba(255,255,255,0.9)_50%,rgb(6,182,212)_75%,rgb(45,212,191)_100%)] bg-clip-text text-transparent pb-3 inline-block">

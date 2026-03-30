@@ -2,12 +2,17 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { locales, Locale } from "@/i18n";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Manrope, Playfair_Display, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import "@/app/globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const manrope = Manrope({
+  variable: "--font-manrope",
+  subsets: ["latin"],
+});
+
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
   subsets: ["latin"],
 });
 
@@ -29,7 +34,7 @@ export async function generateMetadata(props: { params: Promise<{ locale: string
       canonical: "/",
       languages: {
         "en-US": "/en",
-        "uk-UA": "/uk",
+        "uk-UA": "/ua",
       },
     },
     openGraph: {
@@ -80,7 +85,7 @@ export default async function LocaleLayout(
   return (
     <html
       lang={locale}
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
+      className={`${manrope.variable} ${playfair.variable} ${geistMono.variable} h-full antialiased dark`}
     >
       <body className="min-h-full flex flex-col scroll-smooth">
         <NextIntlClientProvider locale={locale} messages={messages}>
