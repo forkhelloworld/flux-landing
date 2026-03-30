@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { ArrowRight, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
 
 interface WaitlistFormProps {
@@ -12,6 +12,7 @@ interface WaitlistFormProps {
 
 export function WaitlistForm({ className, variant = "hero" }: WaitlistFormProps) {
   const t = useTranslations("Waitlist");
+  const locale = useLocale();
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
@@ -31,7 +32,7 @@ export function WaitlistForm({ className, variant = "hero" }: WaitlistFormProps)
       const response = await fetch("/api/waitlist", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, locale }),
       });
 
       const data = await response.json();

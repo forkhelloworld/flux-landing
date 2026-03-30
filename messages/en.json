@@ -264,6 +264,20 @@
     "alreadySubscribed": "You're already on the list!",
     "loading": "Joining...",
     "submitting": "Processing...",
-    "addAnother": "Add another email"
+    "addAnother": "Add another email",
+    "alreadyConfirmed": "Email already confirmed",
+    "confirmed": "Email confirmed and added to list",
+    "emailRequired": "Email is required",
+    "serverError": "Internal server error",
+    "emailSubject": "Confirm your subscription to Flux OS",
+    "emailTitle": "Confirm your subscription",
+    "emailBody": "Click the link below to confirm your email and join the Flux OS waitlist:",
+    "emailButton": "Confirm subscription",
+    "emailOrCopy": "Or copy this link:",
+    "emailValid24h": "The link is valid for 24 hours.",
+    "tokenMissing": "Token is missing",
+    "invalidToken": "Invalid or expired token",
+    "expiredToken": "Token expired. Please register again.",
+    "confirmationFailed": "Confirmation failed"
   }
 }

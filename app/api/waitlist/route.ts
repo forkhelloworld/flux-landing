@@ -1,17 +1,38 @@
 import { Resend } from "resend";
 import { NextResponse } from "next/server";
-import { randomBytes } from "crypto";
+import { getTranslations } from "next-intl/server";
+import { createHmac } from "crypto";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Кешуємо audience ID щоб не створювати кожного разу
 let cachedAudienceId: string | null = null;
 
-// Тимчасове зберігання токенів підтвердження (в продакшені використовуйте БД)
-const pendingConfirmations = new Map<
-  string,
-  { email: string; expiresAt: number }
->();
+const JWT_SECRET = process.env.JWT_SECRET || process.env.RESEND_API_KEY || "fallback_secret_for_development";
+
+function signToken(email: string, expiresInMs: number): string {
+  const payload = { email, exp: Date.now() + expiresInMs };
+  const base64Payload = Buffer.from(JSON.stringify(payload)).toString("base64url");
+  const signature = createHmac("sha256", JWT_SECRET).update(base64Payload).digest("base64url");
+  return `${base64Payload}.${signature}`;
+}
+
+function verifyToken(token: string): { email: string; expired: boolean } | null {
+  try {
+    const [base64Payload, signature] = token.split(".");
+    if (!base64Payload || !signature) return null;
+
+    const expectedSignature = createHmac("sha256", JWT_SECRET).update(base64Payload).digest("base64url");
+    if (signature !== expectedSignature) return null;
+
+    const payload = JSON.parse(Buffer.from(base64Payload, "base64url").toString("utf-8"));
+    if (!payload.email || !payload.exp) return null;
+
+    return { email: payload.email, expired: Date.now() > payload.exp };
+  } catch (error) {
+    return null;
+  }
+}
 
 // Rate limiter: максимум 2 запити в секунду (Resend limit)
 // Використовуємо чергу для синхронізації запитів та мінімальний інтервал між запитами
@@ -179,25 +200,29 @@ async function contactExists(email: string, audienceId: string): Promise<boolean
 }
 
 export async function POST(request: Request) {
+  let locale = "en";
   try {
-    const { email, token } = await request.json();
+    const body = await request.json();
+    const email = body.email;
+    const token = body.token;
+    locale = body.locale || "en";
+    
+    const t = await getTranslations({ locale, namespace: "Waitlist" });
 
     // Якщо є token - це підтвердження
     if (token) {
-      const confirmationToken = token;
-      const confirmation = pendingConfirmations.get(confirmationToken);
+      const confirmation = verifyToken(token);
 
       if (!confirmation) {
         return NextResponse.json(
-          { error: "Невірний або застарілий токен" },
+          { error: t("invalidToken") },
           { status: 400 }
         );
       }
 
-      if (Date.now() > confirmation.expiresAt) {
-        pendingConfirmations.delete(confirmationToken);
+      if (confirmation.expired) {
         return NextResponse.json(
-          { error: "Токен застарів. Зареєструйтесь знову." },
+          { error: t("expiredToken") },
           { status: 400 }
         );
       }
@@ -211,26 +236,24 @@ export async function POST(request: Request) {
         });
       });
 
-      pendingConfirmations.delete(confirmationToken);
-
       if (error) {
         if (
           error.statusCode === 409 ||
           error.message?.includes("already exists")
         ) {
           return NextResponse.json(
-            { success: true, message: "Email вже підтверджено" },
+            { success: true, message: t("alreadyConfirmed") },
             { status: 200 }
           );
         }
         return NextResponse.json(
-          { error: error.message || "Помилка збереження" },
+          { error: error.message || t("error") },
           { status: error.statusCode || 500 }
         );
       }
 
       return NextResponse.json(
-        { success: true, message: "Email підтверджено та додано до списку" },
+        { success: true, message: t("confirmed") },
         { status: 200 }
       );
     }
@@ -238,14 +261,14 @@ export async function POST(request: Request) {
     // Новий запит - валідація та відправка підтвердження
     if (!email) {
       return NextResponse.json(
-        { error: "Email обов'язковий" },
+        { error: t("emailRequired") },
         { status: 400 }
       );
     }
 
     if (!isValidEmail(email)) {
       return NextResponse.json(
-        { error: "Невірний формат email" },
+        { error: t("invalidEmail") },
         { status: 400 }
       );
     }
@@ -258,21 +281,19 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           success: true,
-          message: "Ви вже підписані на наш список очікування",
+          message: t("alreadySubscribed"),
         },
         { status: 200 }
       );
     }
 
     // Генеруємо токен підтвердження
-    const confirmationToken = randomBytes(32).toString("hex");
-    const expiresAt = Date.now() + 24 * 60 * 60 * 1000; // 24 години
-
-    pendingConfirmations.set(confirmationToken, { email, expiresAt });
+    const expirationTime = 24 * 60 * 60 * 1000; // 24 години
+    const confirmationToken = signToken(email, expirationTime);
 
     // Відправляємо email з посиланням для підтвердження
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-    const confirmUrl = `${baseUrl}/api/waitlist?token=${confirmationToken}`;
+    const confirmUrl = `${baseUrl}/api/waitlist?token=${confirmationToken}&locale=${locale}`;
 
     const fromEmail = process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev";
 
@@ -286,13 +307,13 @@ export async function POST(request: Request) {
       return await resend.emails.send({
         from: fromEmail,
         to: email,
-        subject: "Підтвердіть підписку на Flux OS",
+        subject: t("emailSubject"),
         html: `
-          <h1>Підтвердіть вашу підписку</h1>
-          <p>Натисніть на посилання нижче, щоб підтвердити ваш email та додатись до списку очікування Flux OS:</p>
-          <p><a href="${confirmUrl}" style="background: #000; color: #fff; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block;">Підтвердити підписку</a></p>
-          <p>Або скопіюйте це посилання: ${confirmUrl}</p>
-          <p>Посилання дійсне 24 години.</p>
+          <h1>${t("emailTitle")}</h1>
+          <p>${t("emailBody")}</p>
+          <p><a href="${confirmUrl}" style="background: #000; color: #fff; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block;">${t("emailButton")}</a></p>
+          <p>${t("emailOrCopy")} ${confirmUrl}</p>
+          <p>${t("emailValid24h")}</p>
         `,
       });
     });
@@ -304,8 +325,6 @@ export async function POST(request: Request) {
         message: emailError.message,
         name: emailError.name,
       });
-
-      pendingConfirmations.delete(confirmationToken);
 
       // Більш детальні повідомлення про помилки
       let errorMessage = "Не вдалося відправити email.";
@@ -337,14 +356,15 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         success: true,
-        message: "Лист з підтвердженням відправлено на ваш email",
+        message: t("success"),
       },
       { status: 200 }
     );
   } catch (error: any) {
     console.error("Error:", error);
+    const t = await getTranslations({ locale, namespace: "Waitlist" });
     return NextResponse.json(
-      { error: "Внутрішня помилка сервера" },
+      { error: t("serverError") },
       { status: 500 }
     );
   }
@@ -354,21 +374,22 @@ export async function POST(request: Request) {
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const confirmationToken = searchParams.get("token");
+  const locale = searchParams.get("locale") || "en";
+  const t = await getTranslations({ locale, namespace: "Waitlist" });
 
   if (!confirmationToken) {
-    return NextResponse.json({ error: "Токен відсутній" }, { status: 400 });
+    return NextResponse.json({ error: t("tokenMissing") }, { status: 400 });
   }
 
   // Використовуємо той самий код що і POST з token
-  const confirmation = pendingConfirmations.get(confirmationToken);
+  const confirmation = verifyToken(confirmationToken);
 
   if (!confirmation) {
-    return NextResponse.redirect(new URL("/?error=invalid_token", request.url));
+    return NextResponse.redirect(new URL(`/${locale}/?error=invalid_token`, request.url));
   }
 
-  if (Date.now() > confirmation.expiresAt) {
-    pendingConfirmations.delete(confirmationToken);
-    return NextResponse.redirect(new URL("/?error=expired_token", request.url));
+  if (confirmation.expired) {
+    return NextResponse.redirect(new URL(`/${locale}/?error=expired_token`, request.url));
   }
 
   // Додаємо email в audience
@@ -381,16 +402,14 @@ export async function GET(request: Request) {
       });
     });
 
-    pendingConfirmations.delete(confirmationToken);
-
     if (error && error.statusCode !== 409) {
       return NextResponse.redirect(
-        new URL("/?error=confirmation_failed", request.url)
+        new URL(`/${locale}/?error=confirmation_failed`, request.url)
       );
     }
 
-    return NextResponse.redirect(new URL("/?success=confirmed", request.url));
+    return NextResponse.redirect(new URL(`/${locale}/?success=confirmed`, request.url));
   } catch (error) {
-    return NextResponse.redirect(new URL("/?error=server_error", request.url));
+    return NextResponse.redirect(new URL(`/${locale}/?error=server_error`, request.url));
   }
 }

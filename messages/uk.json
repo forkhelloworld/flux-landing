@@ -264,6 +264,20 @@
     "alreadySubscribed": "Ви вже у списку!",
     "loading": "Надсилаємо...",
     "submitting": "Обробка...",
-    "addAnother": "Додати ще один email"
+    "addAnother": "Додати ще один email",
+    "alreadyConfirmed": "Email вже підтверджено",
+    "confirmed": "Email підтверджено та додано до списку",
+    "emailRequired": "Email обов'язковий",
+    "serverError": "Внутрішня помилка сервера",
+    "emailSubject": "Підтвердіть підписку на Flux OS",
+    "emailTitle": "Підтвердіть вашу підписку",
+    "emailBody": "Натисніть на посилання нижче, щоб підтвердити ваш email та додатись до списку очікування Flux OS:",
+    "emailButton": "Підтвердити підписку",
+    "emailOrCopy": "Або скопіюйте це посилання:",
+    "emailValid24h": "Посилання дійсне 24 години.",
+    "tokenMissing": "Токен відсутній",
+    "invalidToken": "Невірний або застарілий токен",
+    "expiredToken": "Токен застарів. Зареєструйтесь знову.",
+    "confirmationFailed": "Помилка підтвердження"
   }
 }
