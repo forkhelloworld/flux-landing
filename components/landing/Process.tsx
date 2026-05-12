@@ -17,14 +17,14 @@ export function Process() {
   ];
 
   return (
-    <section id="how-it-works" className="w-full max-w-5xl 2xl:max-w-7xl py-32 px-6 flex flex-col items-center mx-auto">
+    <section id="how-it-works" aria-labelledby="process-title" className="w-full max-w-5xl 2xl:max-w-7xl py-32 px-6 flex flex-col items-center mx-auto">
       <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={staggerContainer} className="text-center mb-20 max-w-3xl">
         <motion.div variants={staggerItem}>
           <span className="inline-block px-4 py-1.5 rounded-full border border-white/10 bg-white/[0.02] text-[10px] font-bold text-teal-400 tracking-widest uppercase mb-6">
             {t("badge")}
           </span>
         </motion.div>
-        <motion.h2 variants={staggerItem} className="text-3xl md:text-5xl font-medium mb-6 text-white/90">
+        <motion.h2 id="process-title" variants={staggerItem} className="text-3xl md:text-5xl font-medium mb-6 text-white/90">
           {t("title")}
         </motion.h2>
         <motion.p variants={staggerItem} className="text-lg text-white/50 font-light leading-relaxed">

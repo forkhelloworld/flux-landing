@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
-import { WaitlistForm } from "./WaitlistForm";
 
 export function CTA() {
   const t = useTranslations("CTA");
@@ -25,7 +24,14 @@ export function CTA() {
         <p className="text-xl text-white/40 mb-12 max-w-2xl mx-auto font-light leading-relaxed">
           {t("subtitle")}
         </p>
-        <WaitlistForm variant="cta" />
+        <motion.a
+          href="https://app.flux-os.xyz"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.98 }}
+          className="inline-flex h-14 px-10 rounded-full bg-accent text-accent-foreground font-bold items-center justify-center gap-3 shadow-[0_0_50px_rgba(var(--accent-raw),0.3)] hover:shadow-[0_0_80px_rgba(var(--accent-raw),0.5)] transition-shadow duration-300"
+        >
+          {t("button")}
+        </motion.a>
       </motion.div>
     </section>
   );

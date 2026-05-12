@@ -9,14 +9,14 @@ export function Problem() {
   const t = useTranslations("Problem");
 
   return (
-    <section id="vision" className="w-full max-w-5xl 2xl:max-w-7xl py-12 md:py-20 lg:pb-32 px-6 flex flex-col items-center text-center mx-auto">
+    <section id="vision" aria-labelledby="problem-title" className="w-full max-w-5xl 2xl:max-w-7xl py-12 md:py-20 lg:pb-32 px-6 flex flex-col items-center text-center mx-auto">
       <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={staggerContainer} className="w-full">
         <motion.div variants={staggerItem}>
           <span className="inline-block px-4 py-1.5 rounded-full border border-white/10 bg-white/[0.02] text-[10px] font-bold text-teal-400 tracking-widest uppercase mb-6">
             {t("badge")}
           </span>
         </motion.div>
-        <motion.h2 variants={staggerItem} className="text-3xl md:text-5xl font-medium mb-6 text-white/90">
+        <motion.h2 id="problem-title" variants={staggerItem} className="text-3xl md:text-5xl font-medium mb-6 text-white/90">
           {t("title")}
         </motion.h2>
         <motion.p variants={staggerItem} className="text-lg md:text-xl text-white/50 leading-relaxed font-light mb-16 px-4 max-w-3xl mx-auto">

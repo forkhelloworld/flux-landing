@@ -4,14 +4,15 @@
     "howItWorks": "How It Works",
     "features": "Features",
     "faq": "FAQ",
-    "joinWaitlist": "Join Waitlist"
+    "joinWaitlist": "Open App",
+    "announcement": "BETA IS LIVE! FREE FOR EARLY USERS."
   },
   "Hero": {
     "badge": "AI-Powered Productivity Exoskeleton",
     "title1": "Stop Planning.",
     "title2": "Start Doing.",
     "subtitle": "The fastest path from a raw idea to a completed task. No templates, no friction, just momentum.",
-    "cta": "JOIN THE WAITLIST",
+    "cta": "GET STARTED",
     "energyLevel": "Energy Level",
     "optimalFocus": "Optimal Focus",
     "aiDecomposing": "AI Decomposing...",
@@ -158,13 +159,16 @@
   "CTA": {
     "title": "Focus on what matters.",
     "subtitle": "Don't fight your to-do lists. Build an ecosystem that supports your flow.",
-    "button": "JOIN THE WAITLIST"
+    "button": "GET STARTED"
   },
   "Footer": {
-    "copyright": "© {year} FluxOS — Bridging the gap between intent and action."
+    "copyright": "© {year} FluxOS — Bridging the gap between intent and action.",
+    "privacy": "Privacy",
+    "terms": "Terms"
   },
   "ProductMockup": {
     "badge": "The Interface",
+    "joinWaitlist": "Open App",
     "title": "Mindful <span>Momentum</span>",
     "subtitle": "FluxOS stays invisible until you need it, focusing your attention on the next logical action based on your state.",
     "systemStatus": "System Status",
@@ -255,29 +259,67 @@
       "days": "{count} DAYS"
     }
   },
-  "Waitlist": {
-    "placeholder": "Enter your email",
-    "button": "Join Now",
-    "success": "You're on the list! Check your inbox to confirm.",
-    "error": "Something went wrong. Please try again.",
-    "invalidEmail": "Invalid email format",
-    "alreadySubscribed": "You're already on the list!",
-    "loading": "Joining...",
-    "submitting": "Processing...",
-    "addAnother": "Add another email",
-    "alreadyConfirmed": "Email already confirmed",
-    "confirmed": "Email confirmed and added to list",
-    "emailRequired": "Email is required",
-    "serverError": "Internal server error",
-    "emailSubject": "Confirm your subscription to Flux OS",
-    "emailTitle": "Confirm your subscription",
-    "emailBody": "Click the link below to confirm your email and join the Flux OS waitlist:",
-    "emailButton": "Confirm subscription",
-    "emailOrCopy": "Or copy this link:",
-    "emailValid24h": "The link is valid for 24 hours.",
-    "tokenMissing": "Token is missing",
-    "invalidToken": "Invalid or expired token",
-    "expiredToken": "Token expired. Please register again.",
-    "confirmationFailed": "Confirmation failed"
+  "NotFound": {
+    "title": "Page Not Found",
+    "description": "It seems you've drifted into the gap between intention and action. Let's get you back on track.",
+    "backHome": "Back to Home"
+  },
+  "Privacy": {
+    "title": "Privacy Policy",
+    "lastUpdated": "Last updated: {date}",
+    "intro": "This Privacy Policy describes how FluxOS collects, uses, and protects your data within our Productivity OS.",
+    "sections": [
+      {
+        "title": "1. Data Collection & Types",
+        "content": "We collect your email via Google/GitHub OAuth for identification. For system operation, we store: task texts, strategic plans, progression data (XP, levels), and activity logs (action timestamps)."
+      },
+      {
+        "title": "2. AI Processing (OpenRouter)",
+        "content": "FluxOS uses OpenRouter to access third-party LLMs. Your prompts are transmitted for processing, but we do NOT use your private content for model training without consent. We log token usage for technical monitoring of infrastructure."
+      },
+      {
+        "title": "3. Analytics & Cookies",
+        "list": [
+          "PostHog: Product analytics, data strictly hosted on EU servers (GDPR compliant).",
+          "Vercel Analytics: Technical performance monitoring.",
+          "Cookies: Only necessary cookies for maintaining the Supabase session."
+        ]
+      },
+      {
+        "title": "4. Security & RLS",
+        "content": "We use the Row Level Security (RLS) architecture in Supabase. Your data is logically isolated at the database level and is only accessible to your authenticated account."
+      },
+      {
+        "title": "5. Data Erasure (Right to be Forgotten)",
+        "content": "We fully support the right to erasure. Upon account deletion, we perform a \"hard delete\" — all your tasks, plans, logs, and email records are permanently removed from our production databases without the possibility of recovery."
+      }
+    ]
+  },
+  "Terms": {
+    "title": "Terms of Service",
+    "lastUpdated": "Last updated: {date}",
+    "intro": "By using FluxOS, you agree to these legally binding terms.",
+    "sections": [
+      {
+        "title": "1. Beta/MVP Status",
+        "content": "FluxOS is in active development. The service is provided \"as is\". We are not responsible for potential technical glitches, loss of access, or changes in functionality."
+      },
+      {
+        "title": "2. AI Usage & Disclaimer",
+        "content": "AI can make mistakes. FluxOS is not responsible for the accuracy of plans or decisions made based on AI content. Verifying AI results is your sole responsibility."
+      },
+      {
+        "title": "3. Intellectual Property",
+        "content": "All tasks, plans, and content you create remain your intellectual property. We do not claim ownership of your ideas or data."
+      },
+      {
+        "title": "4. Registration & Access",
+        "content": "Registration is available via OAuth. You are responsible for your account security. During the early access stage, the product is free (\"Free forever for early adopters\")."
+      },
+      {
+        "title": "5. Limitation of Liability",
+        "content": "To the extent permitted by law, we are not liable for direct or indirect damages arising from the use of our \"Productivity OS\"."
+      }
+    ]
   }
 }

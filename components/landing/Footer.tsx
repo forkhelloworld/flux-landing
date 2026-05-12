@@ -1,8 +1,9 @@
 import Image from "next/image";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 
 export function Footer() {
   const t = useTranslations("Footer");
+  const locale = useLocale();
 
   return (
     <footer className="py-12 border-t border-white/5 bg-black/40 backdrop-blur-xl relative z-10 w-full px-6">
@@ -15,6 +16,10 @@ export function Footer() {
           <span className="text-[10px] font-mono text-white/10 font-normal tracking-wider opacity-60 uppercase">
             {t("copyright", { year: new Date().getFullYear() })}
           </span>
+          <div className="flex items-center gap-6 text-[10px] font-mono text-white/20 font-normal tracking-wider uppercase">
+            <a href={`/${locale}/privacy`} className="hover:text-white transition-colors">{t("privacy")}</a>
+            <a href={`/${locale}/terms`} className="hover:text-white transition-colors">{t("terms")}</a>
+          </div>
         </div>
       </div>
     </footer>

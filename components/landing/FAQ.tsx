@@ -48,7 +48,7 @@ export function FAQ() {
   const questions = ["q1", "q2", "q3", "q4", "q5", "q6", "q7"] as const;
 
   return (
-    <section id="faq" className="w-full max-w-4xl py-32 px-6 mx-auto">
+    <section id="faq" aria-labelledby="faq-title" className="w-full max-w-4xl py-32 px-6 mx-auto">
       <motion.div
         initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }}
         variants={staggerContainer} className="text-center mb-16"
@@ -56,7 +56,7 @@ export function FAQ() {
         <motion.div variants={staggerItem}>
           <span className="inline-block px-4 py-1.5 rounded-full border border-white/10 bg-white/[0.02] text-[10px] font-bold text-teal-400 tracking-widest uppercase mb-6">{t("badge")}</span>
         </motion.div>
-        <motion.h2 variants={staggerItem} className="text-3xl md:text-5xl font-medium mb-6 text-white/90">{t("title")}</motion.h2>
+        <motion.h2 id="faq-title" variants={staggerItem} className="text-3xl md:text-5xl font-medium mb-6 text-white/90">{t("title")}</motion.h2>
         <motion.p variants={staggerItem} className="text-white/40 text-lg max-w-2xl mx-auto">{t("subtitle")}</motion.p>
       </motion.div>
       <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="space-y-4">

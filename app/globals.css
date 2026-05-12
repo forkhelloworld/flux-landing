@@ -1,13 +1,60 @@
 @import "tailwindcss";
 
 :root {
-  --background: #000000;
-  --foreground: #ffffff;
+  /* Tinted cool dark background */
+  --background: hsl(215 20% 6%);
+  --background-secondary: hsl(215 20% 8%);
+  
+  --foreground: hsl(215 10% 93%);
+  --foreground-muted: hsl(215 10% 60%);
+
+  --card: hsl(215 15% 9%);
+  --card-hover: hsl(215 15% 12%);
+  --card-foreground: hsl(215 10% 93%);
+
+  --accent: hsl(175 70% 45%);
+  --accent-raw: 175 70% 45%;
+  --accent-foreground: hsl(0 0% 0%);
+  --accent-muted: hsl(175 50% 25%);
+  --accent-glow: hsl(175 70% 45% / 0.15);
+
+  --success: hsl(150 50% 45%);
+  --destructive: hsl(0 60% 50%);
+
+  --border: hsl(215 15% 15%);
+  --border-accent: hsl(175 70% 45% / 0.2);
+  --input: hsl(215 15% 12%);
+  --ring: hsl(175 70% 45% / 0.5);
+
+  --radius: 0.5rem;
+  --radius-lg: 0.75rem;
+
+  --glass: hsl(215 20% 6% / 0.7);
+  --glass-border: hsl(215 15% 15%);
+
+  --priority-high: hsl(175 70% 45%);
+  --priority-medium: hsl(200 50% 50%);
+  --priority-low: hsl(215 10% 45%);
+
+  --status-pending: hsl(215 10% 45%);
+  --status-active: hsl(175 70% 45%);
+  --status-completed: hsl(150 50% 45%);
+  --status-needs-attention: hsl(35 80% 55%);
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-background-secondary: var(--background-secondary);
   --color-foreground: var(--foreground);
+  --color-foreground-muted: var(--foreground-muted);
+  --color-accent: var(--accent);
+  --color-accent-muted: var(--accent-muted);
+  --color-card: var(--card);
+  --color-card-hover: var(--card-hover);
+  --color-border: var(--border);
+  --color-border-accent: var(--border-accent);
+  --color-glass: var(--glass);
+  
   --font-sans: var(--font-manrope);
   --font-serif: var(--font-playfair);
   --font-mono: var(--font-geist-mono);
@@ -73,8 +120,8 @@
 }
 
 @keyframes text-glow {
-  0%, 100% { text-shadow: 0 0 20px rgba(45, 212, 191, 0.3), 0 0 40px rgba(45, 212, 191, 0.1); }
-  50% { text-shadow: 0 0 30px rgba(45, 212, 191, 0.5), 0 0 60px rgba(45, 212, 191, 0.2), 0 0 100px rgba(45, 212, 191, 0.1); }
+  0%, 100% { text-shadow: 0 0 20px hsla(var(--accent-raw) / 0.3), 0 0 40px hsla(var(--accent-raw) / 0.1); }
+  50% { text-shadow: 0 0 30px hsla(var(--accent-raw) / 0.5), 0 0 60px hsla(var(--accent-raw) / 0.2), 0 0 100px hsla(var(--accent-raw) / 0.1); }
 }
 
 @keyframes scanline {
@@ -127,7 +174,7 @@
   inset: -1px;
   border-radius: inherit;
   padding: 1px;
-  background: conic-gradient(from var(--angle, 0deg), transparent 40%, rgba(45, 212, 191, 0.3) 50%, transparent 60%);
+  background: conic-gradient(from var(--angle, 0deg), transparent 40%, hsla(var(--accent-raw) / 0.3) 50%, transparent 60%);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
@@ -156,7 +203,7 @@
   position: absolute;
   inset: -8px;
   border-radius: 9999px;
-  border: 1px solid rgba(45, 212, 191, 0.4);
+  border: 1px solid hsla(var(--accent-raw) / 0.4);
   animation: pulse-ring 2s ease-out infinite;
 }
 
@@ -168,7 +215,7 @@
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(45, 212, 191, 0.2), transparent);
+  background: linear-gradient(90deg, transparent, hsla(var(--accent-raw) / 0.2), transparent);
   animation: scanline 3s linear infinite;
   pointer-events: none;
 }
@@ -184,6 +231,6 @@ body {
 html { scroll-behavior: smooth; }
 
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #000; }
-::-webkit-scrollbar-thumb { background: rgba(45, 212, 191, 0.2); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(45, 212, 191, 0.4); }
+::-webkit-scrollbar-track { background: var(--background); }
+::-webkit-scrollbar-thumb { background: hsla(var(--accent-raw) / 0.2); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: hsla(var(--accent-raw) / 0.4); }
