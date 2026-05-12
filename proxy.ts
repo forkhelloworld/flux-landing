@@ -6,11 +6,11 @@ export default createMiddleware({
   locales,
 
   // Used when no locale matches
-  defaultLocale: "uk",
+  defaultLocale: "ua",
 });
 
 export const config = {
   // Match only internationalized pathnames
-  matcher: ["/", "/(uk|en)/:path*"],
+  matcher: ["/", "/(ua|en)/:path*"],
 };
 

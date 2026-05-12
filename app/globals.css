@@ -1,55 +1,236 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 245, 245, 245;
-  --background-end-rgb: 245, 245, 245;
+  /* Tinted cool dark background */
+  --background: hsl(215 20% 6%);
+  --background-secondary: hsl(215 20% 8%);
+  
+  --foreground: hsl(215 10% 93%);
+  --foreground-muted: hsl(215 10% 60%);
+
+  --card: hsl(215 15% 9%);
+  --card-hover: hsl(215 15% 12%);
+  --card-foreground: hsl(215 10% 93%);
+
+  --accent: hsl(175 70% 45%);
+  --accent-raw: 175 70% 45%;
+  --accent-foreground: hsl(0 0% 0%);
+  --accent-muted: hsl(175 50% 25%);
+  --accent-glow: hsl(175 70% 45% / 0.15);
+
+  --success: hsl(150 50% 45%);
+  --destructive: hsl(0 60% 50%);
+
+  --border: hsl(215 15% 15%);
+  --border-accent: hsl(175 70% 45% / 0.2);
+  --input: hsl(215 15% 12%);
+  --ring: hsl(175 70% 45% / 0.5);
+
+  --radius: 0.5rem;
+  --radius-lg: 0.75rem;
+
+  --glass: hsl(215 20% 6% / 0.7);
+  --glass-border: hsl(215 15% 15%);
+
+  --priority-high: hsl(175 70% 45%);
+  --priority-medium: hsl(200 50% 50%);
+  --priority-low: hsl(215 10% 45%);
+
+  --status-pending: hsl(215 10% 45%);
+  --status-active: hsl(175 70% 45%);
+  --status-completed: hsl(150 50% 45%);
+  --status-needs-attention: hsl(35 80% 55%);
 }
 
-.dark {
-  --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 17, 24, 39;
-  --background-end-rgb: 17, 24, 39;
+@theme inline {
+  --color-background: var(--background);
+  --color-background-secondary: var(--background-secondary);
+  --color-foreground: var(--foreground);
+  --color-foreground-muted: var(--foreground-muted);
+  --color-accent: var(--accent);
+  --color-accent-muted: var(--accent-muted);
+  --color-card: var(--card);
+  --color-card-hover: var(--card-hover);
+  --color-border: var(--border);
+  --color-border-accent: var(--border-accent);
+  --color-glass: var(--glass);
+  
+  --font-sans: var(--font-manrope);
+  --font-serif: var(--font-playfair);
+  --font-mono: var(--font-geist-mono);
+
+  /* Custom animations registered in Tailwind theme */
+  --animate-aurora: aurora 20s ease-in-out infinite;
+  --animate-aurora-reverse: aurora 25s ease-in-out infinite reverse;
+  --animate-aurora-slow: aurora 30s ease-in-out infinite;
+  --animate-shimmer: shimmer 4s ease-in-out infinite;
+  --animate-float-up: float-up 20s linear infinite;
+  --animate-pulse-ring: pulse-ring 2s ease-out infinite;
+  --animate-gradient-shift: gradient-shift 15s ease infinite;
+  --animate-grain: grain 8s steps(10) infinite;
+  --animate-scanline: scanline 3s linear infinite;
+  --animate-text-glow: text-glow 3s ease-in-out infinite;
+  --animate-dash-flow: dash-flow 1s linear infinite;
+  --animate-float-gentle: float-gentle 6s ease-in-out infinite;
 }
+
+/* ===== Keyframes (must be vanilla CSS) ===== */
+
+@keyframes aurora {
+  0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; transform: rotate(0deg) scale(1); }
+  25% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; transform: rotate(90deg) scale(1.1); }
+  50% { border-radius: 50% 60% 30% 60% / 30% 40% 70% 50%; transform: rotate(180deg) scale(0.95); }
+  75% { border-radius: 40% 60% 70% 30% / 40% 30% 60% 50%; transform: rotate(270deg) scale(1.05); }
+}
+
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-5%, -10%); }
+  20% { transform: translate(-15%, 5%); }
+  30% { transform: translate(7%, -25%); }
+  40% { transform: translate(-5%, 25%); }
+  50% { transform: translate(-15%, 10%); }
+  60% { transform: translate(15%, 0%); }
+  70% { transform: translate(0%, 15%); }
+  80% { transform: translate(3%, 35%); }
+  90% { transform: translate(-10%, 10%); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes float-up {
+  0% { transform: translateY(100vh) scale(0); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.5); opacity: 0; }
+  100% { transform: scale(1); opacity: 0; }
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes text-glow {
+  0%, 100% { text-shadow: 0 0 20px hsla(var(--accent-raw) / 0.3), 0 0 40px hsla(var(--accent-raw) / 0.1); }
+  50% { text-shadow: 0 0 30px hsla(var(--accent-raw) / 0.5), 0 0 60px hsla(var(--accent-raw) / 0.2), 0 0 100px hsla(var(--accent-raw) / 0.1); }
+}
+
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+@keyframes dash-flow {
+  0% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -20; }
+}
+
+@keyframes float-gentle {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  33% { transform: translateY(-10px) rotate(1deg); }
+  66% { transform: translateY(5px) rotate(-0.5deg); }
+}
+
+/* ===== Pseudo-elements that Tailwind can't do ===== */
+
+/* Grain overlay — needs ::before */
+.grain-overlay::before {
+  content: '';
+  position: fixed;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  animation: grain 8s steps(10) infinite;
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.4;
+}
+
+@media (max-width: 768px) {
+  .grain-overlay::before {
+    animation: none;
+    opacity: 0.2;
+  }
+}
+
+/* Animated gradient border — needs ::before with mask */
+.glow-card {
+  position: relative;
+  overflow: hidden;
+}
+.glow-card::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(from var(--angle, 0deg), transparent 40%, hsla(var(--accent-raw) / 0.3) 50%, transparent 60%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: border-rotate 4s linear infinite;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+.glow-card:hover::before {
+  opacity: 1;
+}
+
+@keyframes border-rotate {
+  0% { --angle: 0deg; }
+  100% { --angle: 360deg; }
+}
+
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+/* Pulse ring for timeline dots — needs ::after */
+.pulse-dot::after {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: 9999px;
+  border: 1px solid hsla(var(--accent-raw) / 0.4);
+  animation: pulse-ring 2s ease-out infinite;
+}
+
+/* Scanline — needs ::after */
+.scanline::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, hsla(var(--accent-raw) / 0.2), transparent);
+  animation: scanline 3s linear infinite;
+  pointer-events: none;
+}
+
+/* ===== Minimal body + scrollbar (can't be Tailwind) ===== */
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: rgb(var(--background-start-rgb));
-  transition: background-color 0.3s ease, color 0.3s ease;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-}
+html { scroll-behavior: smooth; }
 
-@keyframes blob {
-  0% {
-    transform: translate(0px, 0px) scale(1);
-  }
-  33% {
-    transform: translate(30px, -50px) scale(1.1);
-  }
-  66% {
-    transform: translate(-20px, 20px) scale(0.9);
-  }
-  100% {
-    transform: translate(0px, 0px) scale(1);
-  }
-}
-
-.animate-blob {
-  animation: blob 7s infinite;
-}
-
-.animation-delay-2000 {
-  animation-delay: 2s;
-}
-
-.animation-delay-4000 {
-  animation-delay: 4s;
-}
-
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--background); }
+::-webkit-scrollbar-thumb { background: hsla(var(--accent-raw) / 0.2); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: hsla(var(--accent-raw) / 0.4); }
