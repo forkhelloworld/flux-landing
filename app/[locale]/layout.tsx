@@ -25,7 +25,7 @@ const geistMono = Geist_Mono({
 export async function generateMetadata(props: { params: Promise<{ locale: string }> }) {
   const { locale } = await props.params;
   const t = await getTranslations({ locale, namespace: "Metadata" });
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://flux-os.xyz';
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.flux-os.xyz';
 
   const keywordsMap: Record<string, string[]> = {
     en: [
