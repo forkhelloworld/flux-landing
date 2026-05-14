@@ -1,24 +1,28 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { m, useMotionValue, useSpring } from "framer-motion";
 
 export function Particles({ count = 30 }: { count?: number }) {
   const [particles, setParticles] = useState<{ id: number; left: number; size: number; duration: number; delay: number; opacity: number; isBright: boolean }[]>([]);
 
   useEffect(() => {
-    const isMobile = window.innerWidth < 768;
-    const finalCount = isMobile ? Math.min(count, 12) : count;
-    const generated = Array.from({ length: finalCount }, (_, i) => ({
-      id: i,
-      left: Math.random() * 100,
-      size: Math.random() * (isMobile ? 2 : 3) + 1,
-      duration: Math.random() * 20 + 15,
-      delay: Math.random() * 20,
-      opacity: Math.random() * (isMobile ? 0.3 : 0.4) + 0.1,
-      isBright: Math.random() > 0.8,
-    }));
-    setParticles(generated);
+    // Delay particle generation to prioritize initial paint
+    const timer = setTimeout(() => {
+      const isMobile = window.innerWidth < 768;
+      const finalCount = isMobile ? Math.min(count, 12) : count;
+      const generated = Array.from({ length: finalCount }, (_, i) => ({
+        id: i,
+        left: Math.random() * 100,
+        size: Math.random() * (isMobile ? 2 : 3) + 1,
+        duration: Math.random() * 20 + 15,
+        delay: Math.random() * 20,
+        opacity: Math.random() * (isMobile ? 0.3 : 0.4) + 0.1,
+        isBright: Math.random() > 0.8,
+      }));
+      setParticles(generated);
+    }, 1000); // 1 second delay
+    return () => clearTimeout(timer);
   }, [count]);
 
   if (particles.length === 0) return null;
@@ -61,7 +65,7 @@ export function CursorGlow() {
   }, [mouseX, mouseY]);
 
   return (
-    <motion.div
+    <m.div
       className="fixed top-0 left-0 pointer-events-none z-[2] hidden md:block w-[600px] h-[600px] rounded-full"
       style={{
         x: springX,

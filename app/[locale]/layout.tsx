@@ -6,6 +6,7 @@ import { Manrope, Playfair_Display, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "@/app/globals.css";
+import { FramerProvider } from "@/lib/framer-provider";
 
 const manrope = Manrope({
   variable: "--font-manrope",
@@ -23,7 +24,8 @@ const geistMono = Geist_Mono({
 });
 
 export async function generateMetadata(props: { params: Promise<{ locale: string }> }) {
-  const { locale } = await props.params;
+  const params = await props.params;
+  const locale = params?.locale || "en";
   const t = await getTranslations({ locale, namespace: "Metadata" });
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.flux-os.xyz';
 
@@ -110,7 +112,8 @@ export default async function LocaleLayout(
   }
 ) {
   const { children } = props;
-  const { locale } = await props.params;
+  const params = await props.params;
+  const locale = params?.locale || "en";
 
   if (!locales.includes(locale as Locale)) {
     notFound();
@@ -126,7 +129,9 @@ export default async function LocaleLayout(
     >
       <body className="min-h-full flex flex-col scroll-smooth">
         <NextIntlClientProvider locale={locale} messages={messages}>
-          {children}
+          <FramerProvider>
+            {children}
+          </FramerProvider>
         </NextIntlClientProvider>
         <Analytics />
         <SpeedInsights />

@@ -142,24 +142,23 @@
 
 /* ===== Pseudo-elements that Tailwind can't do ===== */
 
-/* Grain overlay — needs ::before */
+/* Grain overlay — simplified for performance */
 .grain-overlay::before {
   content: '';
   position: fixed;
-  inset: -50%;
-  width: 200%;
-  height: 200%;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-  animation: grain 8s steps(10) infinite;
+  inset: -10%;
+  width: 120%;
+  height: 120%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.02'/%3E%3C/svg%3E");
+  animation: grain 12s steps(8) infinite;
   pointer-events: none;
   z-index: 1000;
-  opacity: 0.4;
+  opacity: 0.25;
 }
 
 @media (max-width: 768px) {
   .grain-overlay::before {
-    animation: none;
-    opacity: 0.2;
+    display: none; /* Disable grain on mobile for performance */
   }
 }
 
@@ -179,11 +178,23 @@
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   animation: border-rotate 4s linear infinite;
+  animation-play-state: paused;
   opacity: 0;
   transition: opacity 0.5s;
 }
-.glow-card:hover::before {
-  opacity: 1;
+
+@media (hover: hover) {
+  .glow-card:hover::before {
+    opacity: 1;
+    animation-play-state: running;
+  }
+}
+
+@media (max-width: 768px) {
+  .glow-card::before {
+    animation: none; /* Completely disable animation on mobile */
+    background: hsla(var(--accent-raw) / 0.1); /* static subtle border */
+  }
 }
 
 @keyframes border-rotate {

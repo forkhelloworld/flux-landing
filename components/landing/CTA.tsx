@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { useTranslations } from "next-intl";
 
 export function CTA() {
@@ -11,7 +11,7 @@ export function CTA() {
       <div className="absolute inset-0 bg-[linear-gradient(-45deg,rgba(45,212,191,0.08),rgba(6,182,212,0.05),black,rgba(45,212,191,0.03),black)] bg-[length:400%_400%] animate-gradient-shift pointer-events-none" />
       <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black pointer-events-none" />
 
-      <motion.div
+      <m.div
         initial={{ opacity: 0, scale: 0.9 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
@@ -24,15 +24,15 @@ export function CTA() {
         <p className="text-xl text-white/40 mb-12 max-w-2xl mx-auto font-light leading-relaxed">
           {t("subtitle")}
         </p>
-        <motion.a
+        <m.a
           href="https://app.flux-os.xyz"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.98 }}
           className="inline-flex h-14 px-10 rounded-full bg-accent text-accent-foreground font-bold items-center justify-center gap-3 shadow-[0_0_50px_rgba(var(--accent-raw),0.3)] hover:shadow-[0_0_80px_rgba(var(--accent-raw),0.5)] transition-shadow duration-300"
         >
           {t("button")}
-        </motion.a>
-      </motion.div>
+        </m.a>
+      </m.div>
     </section>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Sparkles, Workflow, Target, HeartPulse, WifiOff, Mic } from "lucide-react";
 import { staggerContainer, staggerItem } from "@/lib/constants";
 import { useTranslations } from "next-intl";
@@ -19,23 +19,23 @@ export function Features() {
 
   return (
     <section id="features" aria-labelledby="features-title" className="w-full max-w-6xl 2xl:max-w-7xl py-12 md:py-32 px-6 flex flex-col items-center mx-auto">
-      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={staggerContainer} className="text-center mb-20 max-w-3xl">
-        <motion.div variants={staggerItem}>
+      <m.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={staggerContainer} className="text-center mb-20 max-w-3xl">
+        <m.div variants={staggerItem}>
           <span className="inline-block px-4 py-1.5 rounded-full border border-white/10 bg-white/[0.02] text-[10px] font-bold text-teal-400 tracking-widest uppercase mb-6">
             {t("badge")}
           </span>
-        </motion.div>
-        <motion.h2 id="features-title" variants={staggerItem} className="text-3xl md:text-5xl font-medium mb-6 text-white/90">
+        </m.div>
+        <m.h2 id="features-title" variants={staggerItem} className="text-3xl md:text-5xl font-medium mb-6 text-white/90">
           {t("title")}
-        </motion.h2>
-        <motion.p variants={staggerItem} className="text-lg text-white/50 font-light leading-relaxed">
+        </m.h2>
+        <m.p variants={staggerItem} className="text-lg text-white/50 font-light leading-relaxed">
           {t("subtitle")}
-        </motion.p>
-      </motion.div>
+        </m.p>
+      </m.div>
 
-      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 w-full">
+      <m.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 w-full">
         {features.map((feature) => (
-          <motion.div
+          <m.div
             key={feature.title}
             variants={staggerItem}
             whileHover={{ y: -4, scale: 1.01 }}
@@ -47,9 +47,9 @@ export function Features() {
             </div>
             <h3 className="text-lg font-semibold text-white/90 mb-3">{feature.title}</h3>
             <p className="text-sm text-white/40 font-light leading-relaxed">{feature.desc}</p>
-          </motion.div>
+          </m.div>
         ))}
-      </motion.div>
+      </m.div>
     </section>
   );
 }

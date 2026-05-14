@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Inbox, Sparkles, Workflow, Target, Trophy, ArrowRight } from "lucide-react";
 import { staggerContainer, staggerItem, colorMap } from "@/lib/constants";
 import { useTranslations } from "next-intl";
@@ -18,23 +18,23 @@ export function Process() {
 
   return (
     <section id="how-it-works" aria-labelledby="process-title" className="w-full max-w-5xl 2xl:max-w-7xl py-32 px-6 flex flex-col items-center mx-auto">
-      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={staggerContainer} className="text-center mb-20 max-w-3xl">
-        <motion.div variants={staggerItem}>
+      <m.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={staggerContainer} className="text-center mb-20 max-w-3xl">
+        <m.div variants={staggerItem}>
           <span className="inline-block px-4 py-1.5 rounded-full border border-white/10 bg-white/[0.02] text-[10px] font-bold text-teal-400 tracking-widest uppercase mb-6">
             {t("badge")}
           </span>
-        </motion.div>
-        <motion.h2 id="process-title" variants={staggerItem} className="text-3xl md:text-5xl font-medium mb-6 text-white/90">
+        </m.div>
+        <m.h2 id="process-title" variants={staggerItem} className="text-3xl md:text-5xl font-medium mb-6 text-white/90">
           {t("title")}
-        </motion.h2>
-        <motion.p variants={staggerItem} className="text-lg text-white/50 font-light leading-relaxed">
+        </m.h2>
+        <m.p variants={staggerItem} className="text-lg text-white/50 font-light leading-relaxed">
           {t("subtitle")}
-        </motion.p>
-      </motion.div>
+        </m.p>
+      </m.div>
 
       <div className="w-full space-y-6">
         {steps.map((step, i) => (
-          <motion.div
+          <m.div
             key={step.num}
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -55,7 +55,7 @@ export function Process() {
               <p className="text-sm text-white/40 font-light leading-relaxed">{step.desc}</p>
             </div>
             <ArrowRight className="w-5 h-5 text-white/10 flex-shrink-0 mt-1 group-hover:text-white/30 transition-colors" />
-          </motion.div>
+          </m.div>
         ))}
       </div>
     </section>

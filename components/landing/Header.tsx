@@ -4,7 +4,7 @@ import { ArrowRight, Menu, X, Zap } from "lucide-react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 
 export function Header() {
   const t = useTranslations("Header");
@@ -20,7 +20,7 @@ export function Header() {
   return (
     <>
       <div className="fixed top-0 inset-x-0 h-10 z-[60] bg-accent flex items-center justify-center px-4 overflow-hidden group">
-        <motion.a 
+        <m.a 
           href="https://app.flux-os.xyz"
           className="flex items-center gap-2 text-[10px] md:text-xs font-bold text-accent-foreground tracking-widest uppercase"
           initial={{ opacity: 0, y: -10 }}
@@ -29,7 +29,7 @@ export function Header() {
           <Zap className="w-3 h-3 fill-accent-foreground" />
           {t("announcement")}
           <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-        </motion.a>
+        </m.a>
         <div className="absolute inset-0 bg-foreground/10 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
       </div>
 
@@ -65,7 +65,7 @@ export function Header() {
 
       <AnimatePresence>
         {isMenuOpen && (
-          <motion.div
+          <m.div
             initial={{ opacity: 0, x: "100%" }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: "100%" }}
@@ -74,7 +74,7 @@ export function Header() {
           >
             <nav aria-label="Mobile navigation" className="flex flex-col items-center gap-8 text-2xl font-semibold tracking-tighter">
               {navItems.map((item) => (
-                <motion.a
+                <m.a
                   key={item.id}
                   href={`#${item.id}`}
                   onClick={() => setIsMenuOpen(false)}
@@ -82,17 +82,17 @@ export function Header() {
                   className="text-foreground-muted hover:text-foreground transition-colors"
                 >
                   {item.label}
-                </motion.a>
+                </m.a>
               ))}
-              <motion.a
+              <m.a
                 href="https://app.flux-os.xyz"
                 onClick={() => setIsMenuOpen(false)}
                 className="mt-4 px-10 py-4 rounded-full bg-accent text-accent-foreground font-bold flex items-center gap-3 shadow-[0_0_30px_rgba(var(--accent-raw),0.3)]"
               >
                 {t("joinWaitlist")} <ArrowRight className="w-5 h-5" />
-              </motion.a>
+              </m.a>
             </nav>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
       </header>

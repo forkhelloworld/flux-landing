@@ -5,31 +5,33 @@ import { useTranslations } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale } = await params;
+export async function generateMetadata(props: { params: Promise<{ locale: string }> }) {
+  const params = await props.params;
+  const locale = params?.locale || "en";
   const t = await getTranslations({ locale, namespace: "NotFound" });
   return {
     title: t("title"),
   };
 }
 
-export default async function NotFound({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale } = await params;
+export default async function NotFound(props: { params: Promise<{ locale: string }> }) {
+  const params = await props.params;
+  const locale = params?.locale || "en";
   const t = await getTranslations({ locale, namespace: "NotFound" });
 
   return (
     <div className="grain-overlay flex flex-col min-h-screen text-white bg-black overflow-x-hidden selection:bg-teal-500/30">
       <VisualEffects />
       <Header />
-      <main className="flex-1 flex flex-col items-center justify-center relative z-[3] px-6 text-center">
-        <div className="space-y-6 max-w-2xl">
-          <div className="inline-block px-3 py-1 rounded-full bg-accent/10 border border-accent/20 text-accent text-xs font-bold tracking-widest uppercase mb-4">
+      <main className="flex-1 flex flex-col items-center justify-center relative z-[3] px-6 text-center pt-24">
+        <div className="space-y-6 max-w-2xl py-20">
+          <div className="inline-block px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/20 text-teal-400 text-[10px] font-bold tracking-widest uppercase mb-4">
             404 Error
           </div>
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white to-white/40">
+          <h1 className="text-5xl md:text-8xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-white/20 pb-2">
             {t("title")}
           </h1>
-          <p className="text-xl text-foreground-muted max-w-md mx-auto">
+          <p className="text-lg md:text-xl text-white/50 max-w-md mx-auto leading-relaxed">
             {t("description")}
           </p>
           <div className="pt-8">

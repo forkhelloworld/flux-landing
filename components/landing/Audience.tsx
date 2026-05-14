@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Rocket, GraduationCap, Brain, Briefcase } from "lucide-react";
 import { staggerContainer, staggerItem, colorMap } from "@/lib/constants";
 import { useTranslations } from "next-intl";
@@ -17,23 +17,23 @@ export function Audience() {
 
   return (
     <section className="w-full max-w-6xl 2xl:max-w-7xl py-32 px-6 flex flex-col items-center mx-auto">
-      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={staggerContainer} className="text-center mb-16 max-w-3xl">
-        <motion.div variants={staggerItem}>
+      <m.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={staggerContainer} className="text-center mb-16 max-w-3xl">
+        <m.div variants={staggerItem}>
           <span className="inline-block px-4 py-1.5 rounded-full border border-white/10 bg-white/[0.02] text-[10px] font-bold text-teal-400 tracking-widest uppercase mb-6">
             {t("badge")}
           </span>
-        </motion.div>
-        <motion.h2 variants={staggerItem} className="text-3xl md:text-5xl font-medium mb-6 text-white/90">
+        </m.div>
+        <m.h2 variants={staggerItem} className="text-3xl md:text-5xl font-medium mb-6 text-white/90">
           {t("title")}
-        </motion.h2>
-        <motion.p variants={staggerItem} className="text-lg text-white/50 font-light leading-relaxed">
+        </m.h2>
+        <m.p variants={staggerItem} className="text-lg text-white/50 font-light leading-relaxed">
           {t("subtitle")}
-        </motion.p>
-      </motion.div>
+        </m.p>
+      </m.div>
 
-      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 w-full">
+      <m.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 w-full">
         {personas.map((persona, i) => (
-          <motion.div
+          <m.div
             key={persona.title}
             variants={staggerItem}
             whileHover={{ y: -6 }}
@@ -45,9 +45,9 @@ export function Audience() {
             </div>
             <h3 className="text-base font-semibold text-white/90 mb-2">{persona.title}</h3>
             <p className="text-sm text-white/40 font-light leading-relaxed">{persona.desc}</p>
-          </motion.div>
+          </m.div>
         ))}
-      </motion.div>
+      </m.div>
     </section>
   );
 }

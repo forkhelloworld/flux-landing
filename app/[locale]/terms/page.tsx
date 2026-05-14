@@ -3,8 +3,9 @@ import { Footer } from "@/components/landing/Footer";
 import { VisualEffects } from "@/components/landing/VisualEffects";
 import { getTranslations } from "next-intl/server";
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale } = await params;
+export async function generateMetadata(props: { params: Promise<{ locale: string }> }) {
+  const params = await props.params;
+  const locale = params?.locale || "en";
   const t = await getTranslations({ locale, namespace: "Terms" });
   return {
     title: t("title"),
@@ -17,8 +18,9 @@ interface Section {
   list?: string[];
 }
 
-export default async function TermsPage({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale } = await params;
+export default async function TermsPage(props: { params: Promise<{ locale: string }> }) {
+  const params = await props.params;
+  const locale = params?.locale || "en";
   const t = await getTranslations({ locale, namespace: "Terms" });
   
   // Defensive way to get sections
