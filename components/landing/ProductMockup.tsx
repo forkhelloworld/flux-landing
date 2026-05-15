@@ -63,13 +63,15 @@ export function ProductMockup() {
           {/* Subtle Outer Border / Glow Frame - Restored Glass & Fixed Radius */}
           <div className="relative isolate overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-1 shadow-2xl backdrop-blur-md md:rounded-[2rem]">
             {/* Inner Screenshot Container with perfectly matched radius */}
-            <div className="relative aspect-[16/9] w-full overflow-hidden rounded-[calc(1.5rem-4px)] bg-black/20 md:rounded-[calc(2rem-4px)]">
+            <div className="relative aspect-[1536/722] w-full overflow-hidden rounded-[calc(1.5rem-4px)] bg-black/20 md:rounded-[calc(2rem-4px)]">
               <Image
                 src="/image.png"
                 alt="FluxOS MVP Dashboard"
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1400px"
-                className="object-cover object-top opacity-90 transition-all duration-700 group-hover:opacity-100"
+                priority
+                quality={90}
+                className="object-contain object-top transition-all duration-700"
                 draggable={false}
               />{' '}
               {/* Subtle Shadow Overlay */}

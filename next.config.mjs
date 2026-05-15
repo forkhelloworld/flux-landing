@@ -10,6 +10,9 @@ const withBundleAnalyzer = withBundleAnalyzerInit({
 const nextConfig = {
   allowedDevOrigins: ['192.168.0.39'],
   reactStrictMode: true,
+  images: {
+    qualities: [75, 90],
+  },
 };
 
 export default withBundleAnalyzer(withNextIntl(nextConfig));
