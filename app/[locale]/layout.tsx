@@ -70,9 +70,9 @@ export async function generateMetadata(props: { params: Promise<{ locale: string
       siteName: "FluxOS",
       images: [
         {
-          url: "/image.png",
-          width: 1366,
-          height: 768,
+          url: `/og-${locale}.png`,
+          width: 1200,
+          height: 630,
           alt: t("ogTitle"),
         },
       ],
@@ -84,7 +84,7 @@ export async function generateMetadata(props: { params: Promise<{ locale: string
       title: t("ogTitle"),
       description: t("ogDescription"),
       creator: t("twitterHandle"),
-      images: ["/image.png"],
+      images: [`/og-${locale}.png`],
     },
     robots: {
       index: true,
