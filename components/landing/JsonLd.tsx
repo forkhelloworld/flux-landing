@@ -1,60 +1,60 @@
-"use client";
+'use client';
 
-import { useTranslations } from "next-intl";
+import { useTranslations } from 'next-intl';
 
 export function JsonLd() {
-  const t = useTranslations("FAQ");
-  const meta = useTranslations("Metadata");
+  const t = useTranslations('FAQ');
+  const meta = useTranslations('Metadata');
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://flux-os.xyz";
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://flux-os.xyz';
 
-  const questions = ["q1", "q2", "q3", "q4", "q5", "q6", "q7"] as const;
+  const questions = ['q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7'] as const;
 
   const softwareApp = {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    name: "FluxOS",
-    applicationCategory: "ProductivityApplication",
-    operatingSystem: "Web",
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'FluxOS',
+    applicationCategory: 'ProductivityApplication',
+    operatingSystem: 'Web',
     url: baseUrl,
-    description: meta("description"),
+    description: meta('description'),
     offers: {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "USD",
-      availability: "https://schema.org/InStock",
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+      availability: 'https://schema.org/InStock',
     },
     creator: {
-      "@type": "Organization",
-      name: "FluxOS",
+      '@type': 'Organization',
+      name: 'FluxOS',
       url: baseUrl,
       logo: `${baseUrl}/logo.png`,
     },
   };
 
   const faqPage = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
     mainEntity: questions.map((q) => ({
-      "@type": "Question",
+      '@type': 'Question',
       name: t(`questions.${q}.q`),
       acceptedAnswer: {
-        "@type": "Answer",
+        '@type': 'Answer',
         text: t(`questions.${q}.a`),
       },
     })),
   };
 
   const website = {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    name: "FluxOS",
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'FluxOS',
     url: baseUrl,
-    description: meta("description"),
+    description: meta('description'),
     potentialAction: {
-      "@type": "SearchAction",
+      '@type': 'SearchAction',
       target: `${baseUrl}/search?q={search_term_string}`,
-      "query-input": "required name=search_term_string",
+      'query-input': 'required name=search_term_string',
     },
   };
 

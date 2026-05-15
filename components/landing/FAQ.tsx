@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { m, AnimatePresence } from "framer-motion";
-import { ChevronDown } from "lucide-react";
-import { staggerContainer, staggerItem } from "@/lib/constants";
-import { useTranslations } from "next-intl";
+import { useState } from 'react';
+import { m, AnimatePresence } from 'framer-motion';
+import { ChevronDown } from 'lucide-react';
+import { staggerContainer, staggerItem } from '@/lib/constants';
+import { useTranslations } from 'next-intl';
 
 function FAQItem({ question, answer }: { question: string; answer: string }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,27 +12,29 @@ function FAQItem({ question, answer }: { question: string; answer: string }) {
   return (
     <m.div
       variants={staggerItem}
-      className="border border-white/10 rounded-2xl bg-white/[0.01] overflow-hidden transition-colors hover:bg-white/[0.02] hover:border-white/15"
+      className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.01] transition-colors hover:border-white/15 hover:bg-white/[0.02]"
     >
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full p-8 text-left flex items-center justify-between focus:outline-none group"
+        className="group flex w-full items-center justify-between p-8 text-left focus:outline-none"
       >
-        <span className="font-medium text-lg text-white/90 group-hover:text-white transition-colors">{question}</span>
+        <span className="text-lg font-medium text-white/90 transition-colors group-hover:text-white">
+          {question}
+        </span>
         <m.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.3 }}>
-          <ChevronDown className="w-5 h-5 text-teal-400" />
+          <ChevronDown className="h-5 w-5 text-teal-400" />
         </m.div>
       </button>
       <AnimatePresence>
         {isOpen && (
           <m.div
             initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
+            animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
             className="overflow-hidden"
           >
-            <div className="p-8 pt-0 text-white/50 text-base leading-relaxed font-light border-t border-white/5 mt-2">
+            <div className="mt-2 border-t border-white/5 p-8 pt-0 text-base leading-relaxed font-light text-white/50">
               {answer}
             </div>
           </m.div>
@@ -43,23 +45,42 @@ function FAQItem({ question, answer }: { question: string; answer: string }) {
 }
 
 export function FAQ() {
-  const t = useTranslations("FAQ");
+  const t = useTranslations('FAQ');
 
-  const questions = ["q1", "q2", "q3", "q4", "q5", "q6", "q7"] as const;
+  const questions = ['q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7'] as const;
 
   return (
-    <section id="faq" aria-labelledby="faq-title" className="w-full max-w-4xl py-32 px-6 mx-auto">
+    <section id="faq" aria-labelledby="faq-title" className="mx-auto w-full max-w-4xl px-6 py-32">
       <m.div
-        initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }}
-        variants={staggerContainer} className="text-center mb-16"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-80px' }}
+        variants={staggerContainer}
+        className="mb-16 text-center"
       >
         <m.div variants={staggerItem}>
-          <span className="inline-block px-4 py-1.5 rounded-full border border-white/10 bg-white/[0.02] text-[10px] font-bold text-teal-400 tracking-widest uppercase mb-6">{t("badge")}</span>
+          <span className="mb-6 inline-block rounded-full border border-white/10 bg-white/[0.02] px-4 py-1.5 text-[10px] font-bold tracking-widest text-teal-400 uppercase">
+            {t('badge')}
+          </span>
         </m.div>
-        <m.h2 id="faq-title" variants={staggerItem} className="text-3xl md:text-5xl font-medium mb-6 text-white/90">{t("title")}</m.h2>
-        <m.p variants={staggerItem} className="text-white/40 text-lg max-w-2xl mx-auto">{t("subtitle")}</m.p>
+        <m.h2
+          id="faq-title"
+          variants={staggerItem}
+          className="mb-6 text-3xl font-medium text-white/90 md:text-5xl"
+        >
+          {t('title')}
+        </m.h2>
+        <m.p variants={staggerItem} className="mx-auto max-w-2xl text-lg text-white/40">
+          {t('subtitle')}
+        </m.p>
       </m.div>
-      <m.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="space-y-4">
+      <m.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={staggerContainer}
+        className="space-y-4"
+      >
         {questions.map((q) => (
           <FAQItem key={q} question={t(`questions.${q}.q`)} answer={t(`questions.${q}.a`)} />
         ))}

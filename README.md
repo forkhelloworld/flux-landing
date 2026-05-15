@@ -73,4 +73,3 @@ flux-landing/
 4. Використайте код з `supabase-example.ts` для `route.ts`
 
 Детальні інструкції в `RECOMMENDATIONS.md`
-

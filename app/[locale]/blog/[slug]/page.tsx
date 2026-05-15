@@ -1,14 +1,14 @@
-import { Header } from "@/components/landing/Header";
-import { Footer } from "@/components/landing/Footer";
-import { getPostData, getSortedPostsData } from "@/lib/blog";
-import { locales } from "@/i18n";
-import { notFound } from "next/navigation";
-import { ArrowLeft, Calendar, User, Clock } from "lucide-react";
-import Link from "next/link";
-import { format } from "date-fns";
-import { uk, enUS } from "date-fns/locale";
+import { Header } from '@/components/landing/Header';
+import { Footer } from '@/components/landing/Footer';
+import { getPostData, getSortedPostsData } from '@/lib/blog';
+import { locales } from '@/i18n';
+import { notFound } from 'next/navigation';
+import { ArrowLeft, Calendar, User, Clock } from 'lucide-react';
+import Link from 'next/link';
+import { format } from 'date-fns';
+import { uk, enUS } from 'date-fns/locale';
 
-import Image from "next/image";
+import Image from 'next/image';
 
 export async function generateStaticParams() {
   const params = [];
@@ -21,7 +21,9 @@ export async function generateStaticParams() {
   return params;
 }
 
-export default async function BlogPostPage(props: { params: Promise<{ locale: string; slug: string }> }) {
+export default async function BlogPostPage(props: {
+  params: Promise<{ locale: string; slug: string }>;
+}) {
   const params = await props.params;
   const { locale, slug } = params;
   const post = await getPostData(locale, slug);
@@ -30,69 +32,63 @@ export default async function BlogPostPage(props: { params: Promise<{ locale: st
     notFound();
   }
 
-  const dateLocale = locale === "ua" ? uk : enUS;
+  const dateLocale = locale === 'ua' ? uk : enUS;
 
   return (
-    <div className="grain-overlay flex flex-col min-h-screen text-white bg-black overflow-x-hidden selection:bg-teal-500/30 font-manrope">
+    <div className="grain-overlay font-manrope flex min-h-screen flex-col overflow-x-hidden bg-black text-white selection:bg-teal-500/30">
       <Header />
-      
-      <main className="flex-1 flex flex-col items-center relative z-[3] pt-32 pb-20 px-6">
-        <article className="max-w-3xl w-full">
-          <Link 
+
+      <main className="relative z-[3] flex flex-1 flex-col items-center px-6 pt-32 pb-20">
+        <article className="w-full max-w-3xl">
+          <Link
             href={`/${locale}/blog`}
-            className="inline-flex items-center gap-2 text-foreground-muted hover:text-white transition-colors mb-8 group"
+            className="text-foreground-muted group mb-8 inline-flex items-center gap-2 transition-colors hover:text-white"
           >
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            {locale === "ua" ? "Назад до блогу" : "Back to blog"}
+            <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+            {locale === 'ua' ? 'Назад до блогу' : 'Back to blog'}
           </Link>
 
           <header className="mb-12 space-y-6">
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tighter leading-tight">
+            <h1 className="text-4xl leading-tight font-bold tracking-tighter md:text-5xl">
               {post.title}
             </h1>
-            
-            <div className="flex flex-wrap items-center gap-6 text-sm text-foreground-muted">
+
+            <div className="text-foreground-muted flex flex-wrap items-center gap-6 text-sm">
               <span className="flex items-center gap-2">
-                <Calendar className="w-4 h-4" />
-                {format(new Date(post.date), "MMMM d, yyyy", { locale: dateLocale })}
+                <Calendar className="h-4 w-4" />
+                {format(new Date(post.date), 'MMMM d, yyyy', { locale: dateLocale })}
               </span>
               <span className="flex items-center gap-2">
-                <User className="w-4 h-4" />
+                <User className="h-4 w-4" />
                 {post.author}
               </span>
               <span className="flex items-center gap-2">
-                <Clock className="w-4 h-4" />
+                <Clock className="h-4 w-4" />
                 {Math.ceil((post.contentHtml?.length || 0) / 1000)} min read
               </span>
             </div>
           </header>
 
-          <div className="relative aspect-video rounded-3xl overflow-hidden mb-12 bg-white/5 border border-white/10">
+          <div className="relative mb-12 aspect-video overflow-hidden rounded-3xl border border-white/10 bg-white/5">
             {post.coverImage ? (
-              <Image 
-                src={post.coverImage} 
-                alt={post.title} 
-                fill 
+              <Image
+                src={post.coverImage}
+                alt={post.title}
+                fill
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 768px"
                 priority
               />
             ) : (
-             <div className="absolute inset-0 flex items-center justify-center text-white/10 font-bold text-6xl italic select-none">
+              <div className="absolute inset-0 flex items-center justify-center text-6xl font-bold text-white/10 italic select-none">
                 FLUX OS
-             </div>
+              </div>
             )}
           </div>
 
-          <div 
-            className="prose prose-invert prose-teal max-w-none 
-              prose-headings:tracking-tight prose-headings:font-bold
-              prose-p:text-foreground-muted prose-p:leading-relaxed prose-p:text-lg
-              prose-li:text-foreground-muted prose-li:text-lg
-              prose-strong:text-white
-              prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-6
-              prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-4"
-            dangerouslySetInnerHTML={{ __html: post.contentHtml || "" }}
+          <div
+            className="prose prose-invert prose-teal prose-headings:tracking-tight prose-headings:font-bold prose-p:text-foreground-muted prose-p:leading-relaxed prose-p:text-lg prose-li:text-foreground-muted prose-li:text-lg prose-strong:text-white prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-6 prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-4 max-w-none"
+            dangerouslySetInnerHTML={{ __html: post.contentHtml || '' }}
           />
         </article>
       </main>

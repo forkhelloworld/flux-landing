@@ -1,10 +1,20 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { m, useMotionValue, useSpring } from "framer-motion";
+import { useState, useEffect } from 'react';
+import { m, useMotionValue, useSpring } from 'framer-motion';
 
 export function Particles({ count = 30 }: { count?: number }) {
-  const [particles, setParticles] = useState<{ id: number; left: number; size: number; duration: number; delay: number; opacity: number; isBright: boolean }[]>([]);
+  const [particles, setParticles] = useState<
+    {
+      id: number;
+      left: number;
+      size: number;
+      duration: number;
+      delay: number;
+      opacity: number;
+      isBright: boolean;
+    }[]
+  >([]);
 
   useEffect(() => {
     // Delay particle generation to prioritize initial paint
@@ -28,20 +38,20 @@ export function Particles({ count = 30 }: { count?: number }) {
   if (particles.length === 0) return null;
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-[1] overflow-hidden">
+    <div className="pointer-events-none fixed inset-0 z-[1] overflow-hidden">
       {particles.map((p) => (
         <div
           key={p.id}
-          className="absolute rounded-full pointer-events-none animate-float-up"
+          className="animate-float-up pointer-events-none absolute rounded-full"
           style={{
             left: `${p.left}%`,
             width: `${p.size}px`,
             height: `${p.size}px`,
-            background: p.isBright ? "rgba(45,212,191,0.6)" : "rgba(255,255,255,0.3)",
+            background: p.isBright ? 'rgba(45,212,191,0.6)' : 'rgba(255,255,255,0.3)',
             animationDuration: `${p.duration}s`,
             animationDelay: `${p.delay}s`,
             opacity: p.opacity,
-            boxShadow: p.isBright ? "0 0 6px rgba(45,212,191,0.4)" : "none",
+            boxShadow: p.isBright ? '0 0 6px rgba(45,212,191,0.4)' : 'none',
           }}
         />
       ))}
@@ -60,19 +70,20 @@ export function CursorGlow() {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
     };
-    window.addEventListener("mousemove", handleMove);
-    return () => window.removeEventListener("mousemove", handleMove);
+    window.addEventListener('mousemove', handleMove);
+    return () => window.removeEventListener('mousemove', handleMove);
   }, [mouseX, mouseY]);
 
   return (
     <m.div
-      className="fixed top-0 left-0 pointer-events-none z-[2] hidden md:block w-[600px] h-[600px] rounded-full"
+      className="pointer-events-none fixed top-0 left-0 z-[2] hidden h-[600px] w-[600px] rounded-full md:block"
       style={{
         x: springX,
         y: springY,
-        translateX: "-50%",
-        translateY: "-50%",
-        background: "radial-gradient(circle, rgba(45,212,191,0.06) 0%, rgba(6,182,212,0.03) 30%, transparent 70%)",
+        translateX: '-50%',
+        translateY: '-50%',
+        background:
+          'radial-gradient(circle, rgba(45,212,191,0.06) 0%, rgba(6,182,212,0.03) 30%, transparent 70%)',
       }}
     />
   );
@@ -80,18 +91,26 @@ export function CursorGlow() {
 
 export function AuroraBlobs() {
   return (
-    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-70 hidden md:block">
+    <div className="pointer-events-none fixed inset-0 z-0 hidden overflow-hidden opacity-70 md:block">
       <div
-        className="absolute w-[800px] h-[600px] -top-[15%] -left-[10%] animate-aurora"
-        style={{ background: "radial-gradient(ellipse, rgba(45,212,191,0.08) 0%, transparent 70%)" }}
+        className="animate-aurora absolute -top-[15%] -left-[10%] h-[600px] w-[800px]"
+        style={{
+          background: 'radial-gradient(ellipse, rgba(45,212,191,0.08) 0%, transparent 70%)',
+        }}
       />
       <div
-        className="absolute w-[600px] h-[500px] top-[20%] -right-[15%] animate-aurora-reverse"
-        style={{ animationDelay: "-5s", background: "radial-gradient(ellipse, rgba(6,182,212,0.06) 0%, transparent 70%)" }}
+        className="animate-aurora-reverse absolute top-[20%] -right-[15%] h-[500px] w-[600px]"
+        style={{
+          animationDelay: '-5s',
+          background: 'radial-gradient(ellipse, rgba(6,182,212,0.06) 0%, transparent 70%)',
+        }}
       />
       <div
-        className="absolute w-[700px] h-[500px] bottom-[10%] left-[30%] animate-aurora-slow"
-        style={{ animationDelay: "-12s", background: "radial-gradient(ellipse, rgba(45,212,191,0.04) 0%, transparent 70%)" }}
+        className="animate-aurora-slow absolute bottom-[10%] left-[30%] h-[500px] w-[700px]"
+        style={{
+          animationDelay: '-12s',
+          background: 'radial-gradient(ellipse, rgba(45,212,191,0.04) 0%, transparent 70%)',
+        }}
       />
     </div>
   );

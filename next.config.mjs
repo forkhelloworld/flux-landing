@@ -1,8 +1,8 @@
-const createNextIntlPlugin = require('next-intl/plugin');
+import createNextIntlPlugin from 'next-intl/plugin';
+import withBundleAnalyzerInit from '@next/bundle-analyzer';
 
 const withNextIntl = createNextIntlPlugin('./i18n.ts');
-
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
+const withBundleAnalyzer = withBundleAnalyzerInit({
   enabled: process.env.ANALYZE === 'true',
 });
 
@@ -10,6 +10,6 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 const nextConfig = {
   allowedDevOrigins: ['192.168.0.39'],
   reactStrictMode: true,
-}
+};
 
-module.exports = withBundleAnalyzer(withNextIntl(nextConfig))
+export default withBundleAnalyzer(withNextIntl(nextConfig));
