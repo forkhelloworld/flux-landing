@@ -3,18 +3,22 @@
 import { ArrowRight, Menu, X, Zap } from "lucide-react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
+import { useParams } from "next/navigation";
 import { useState } from "react";
 import { m, AnimatePresence } from "framer-motion";
 
 export function Header() {
   const t = useTranslations("Header");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const params = useParams();
+  const locale = params?.locale as string || "en";
 
   const navItems = [
-    { id: "vision", label: t("problem") },
-    { id: "how-it-works", label: t("howItWorks") },
-    { id: "features", label: t("features") },
-    { id: "faq", label: t("faq") }
+    { id: "vision", label: t("problem"), href: `/${locale}#vision` },
+    { id: "how-it-works", label: t("howItWorks"), href: `/${locale}#how-it-works` },
+    { id: "features", label: t("features"), href: `/${locale}#features` },
+    { id: "faq", label: t("faq"), href: `/${locale}#faq` },
+    { id: "blog", label: t("blog"), href: `/${locale}/blog` }
   ];
 
   return (
@@ -40,7 +44,7 @@ export function Header() {
       </div>
       <nav aria-label="Main navigation" className="ml-auto hidden md:flex items-center gap-8 text-sm font-medium text-foreground-muted">
         {navItems.map((item) => (
-          <a key={item.id} href={`#${item.id}`} 
+          <a key={item.id} href={item.href} 
             className="hover:text-white transition-colors relative group"
           >
             {item.label}
@@ -76,7 +80,7 @@ export function Header() {
               {navItems.map((item) => (
                 <m.a
                   key={item.id}
-                  href={`#${item.id}`}
+                  href={item.href}
                   onClick={() => setIsMenuOpen(false)}
                   whileHover={{ scale: 1.1, color: "var(--accent)" }}
                   className="text-foreground-muted hover:text-foreground transition-colors"

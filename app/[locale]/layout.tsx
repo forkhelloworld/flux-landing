@@ -125,6 +125,7 @@ export default async function LocaleLayout(
     <html
       lang={locale === "ua" ? "uk" : locale}
       className={`${manrope.variable} ${playfair.variable} ${geistMono.variable} h-full antialiased dark`}
+      data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col scroll-smooth">

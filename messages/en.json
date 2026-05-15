@@ -4,6 +4,7 @@
     "howItWorks": "How It Works",
     "features": "Features",
     "faq": "FAQ",
+    "blog": "Blog",
     "joinWaitlist": "Open App",
     "announcement": "BETA IS LIVE! FREE FOR EARLY USERS."
   },
@@ -218,7 +219,9 @@
     "description": "The fastest path from a raw idea to a completed task. No templates, no friction, just momentum.",
     "ogTitle": "FluxOS — AI-Powered Productivity Exoskeleton",
     "ogDescription": "Close the execution gap. FluxOS turns raw ideas into finished tasks by matching your energy and state.",
-    "twitterHandle": "@fluxos_hq"
+    "twitterHandle": "@fluxos_hq",
+    "blogTitle": "FluxOS Blog — Insights on Productivity & AI",
+    "blogDescription": "Deep dives into executive function, AI workflows, and the philosophy of building FluxOS."
   },
   "Mockup": {
     "energy": {
